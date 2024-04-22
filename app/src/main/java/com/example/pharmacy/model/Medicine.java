@@ -1,6 +1,12 @@
 package com.example.pharmacy.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "medicine")
 public class Medicine {
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private final int imageResource;
     private final String description;
     private final double price;
@@ -9,6 +15,14 @@ public class Medicine {
         this.imageResource = imageResource;
         this.description = description;
         this.price = price;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public int getImageResource() {

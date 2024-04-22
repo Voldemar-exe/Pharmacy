@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/MedicineListFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.educatemindmemory.ui.fragment.HomeFragment"
+        android:id="@+id/MedicineListFragment"
+        android:name="com.example.pharmacy.ui.MedicineListFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home"
+        tools:layout="@layout/fragment_medicine_list"
         app:defaultNavHost="true"
         />
 </navigation>
