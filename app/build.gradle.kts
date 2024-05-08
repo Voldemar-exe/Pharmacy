@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
     implementation(libs.legacy.support.v4)
     implementation(libs.room.common)
     implementation(libs.room.runtime)

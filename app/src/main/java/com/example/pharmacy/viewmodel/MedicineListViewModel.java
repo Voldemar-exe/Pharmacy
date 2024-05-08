@@ -20,23 +20,21 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MedicineListViewModel extends ViewModel {
     private final MedicineDao medicineDao;
-    private final MutableLiveData<List<Medicine>> medicinesLiveData;
+    private final MutableLiveData<List<Medicine>> medicinesLiveData = new MutableLiveData<>();
     private final ExecutorService backgroundExecutor = Executors.newSingleThreadExecutor();
     private final Scheduler backgroundScheduler = Schedulers.from(backgroundExecutor);
     private final Scheduler mainScheduler = AndroidSchedulers.mainThread();
 
     public MedicineListViewModel(MedicineDao medicineDao) {
         this.medicineDao = medicineDao;
-        medicinesLiveData = new MutableLiveData<>();
-        loadMedicines();
-    }
-
-    private void loadMedicines() {
         medicineDao.getAllMedicines().observeForever(medicinesLiveData::setValue);
     }
 
+    public void updateMedicine(Medicine medicine) {
+        medicineDao.updateMedicine(medicine);
+    }
 
-    private void insertMedicine(Medicine medicine) {
+    public void insertMedicine(Medicine medicine) {
         Completable insertCompletable = Completable.create(emitter -> {
             medicineDao.insertMedicine(medicine);
             emitter.onComplete();
@@ -63,7 +61,7 @@ public class MedicineListViewModel extends ViewModel {
                 });
     }
 
-    public LiveData<List<Medicine>> getMedicinesLiveData() {
+    public LiveData<List<Medicine>> getMedicines() {
         return medicinesLiveData;
     }
 

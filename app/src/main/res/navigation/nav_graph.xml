@@ -10,6 +10,48 @@
         android:name="com.example.pharmacy.ui.MedicineListFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_medicine_list"
-        app:defaultNavHost="true"
-        />
+        app:defaultNavHost="true">
+
+        <action
+            android:id="@+id/action_MedicineListFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.pharmacy.ui.SignInFragment"
+        android:label="SignInFragment" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_MedicineListFragment"
+            app:destination="@id/MedicineListFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.pharmacy.ui.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_MedicineListFragment"
+            app:destination="@id/MedicineListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.pharmacy.ui.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
 </navigation>

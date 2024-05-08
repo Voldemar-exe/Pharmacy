@@ -8,7 +8,7 @@ public class Medicine {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private final int imageResource;
-    private final String description;
+    private String description;
     private final double price;
 
     public Medicine(int imageResource, String description, double price) {
@@ -27,6 +27,10 @@ public class Medicine {
 
     public int getImageResource() {
         return imageResource;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDescription() {

@@ -13,20 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmacy.R;
 import com.example.pharmacy.model.Medicine;
-import com.example.pharmacy.viewmodel.MedicineListViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder> {
-
-    private final MedicineListViewModel medicineListViewModel;
+    private final List<Medicine> medicineList = new ArrayList<>();
+    public MedicineListAdapter() {}
 
     @SuppressLint("NotifyDataSetChanged")
-    public MedicineListAdapter(MedicineListViewModel medicineListViewModel) {
-        this.medicineListViewModel = medicineListViewModel;
-        medicineListViewModel.getMedicinesLiveData().observeForever(medicines -> notifyDataSetChanged());
+    public void updateItems(List<Medicine> newMedicineList) {
+        medicineList.clear();
+        medicineList.addAll(newMedicineList);
+        notifyDataSetChanged();
     }
-
 
     @NonNull
     @Override
@@ -38,23 +38,21 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MedicineViewHolder holder, int position) {
-        List<Medicine> medicines = medicineListViewModel.getMedicinesLiveData().getValue();
-        if (medicines != null && position < medicines.size()) {
-            Medicine medicine = medicines.get(position);
-            holder.imageViewMedicine.setImageResource(medicine.getImageResource()); // Replace with your logic to set image
+        if (position < medicineList.size()) {
+            Medicine medicine = medicineList.get(position);
+            holder.imageViewMedicine.setImageResource(medicine.getImageResource());
             holder.textViewDescription.setText(medicine.getDescription());
             holder.textViewPrice.setText(String.valueOf(medicine.getPrice()));
             // Set click listeners or other logic for views in the ViewHolder
-        } else {
-            // Handle potential empty list or invalid position scenarios (optional)
         }
+//        String item = medicineList.get(position).getDescription();
+//        holder.bind(item);
     }
 
 
     @Override
     public int getItemCount() {
-        List<Medicine> medicines = medicineListViewModel.getMedicinesLiveData().getValue();
-        return medicines != null ? medicines.size() : 0;
+        return medicineList.size();
     }
 
 
@@ -71,7 +69,6 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewPrice = itemView.findViewById(R.id.text_view_price);
             btnAdd = itemView.findViewById(R.id.btnAdd);
-            // Добавь обработчик для кнопки или других View, если необходимо
         }
     }
 }

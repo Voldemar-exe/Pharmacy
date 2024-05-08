@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="medicine">
+        <item>Парацетамол</item>
+        <item>Ибупрофен</item>
+        <item>Ацетилсалициловая кислота</item>
+        <item>Дротаверин</item>
+        <item>Мебеверина гидрохлорид</item>
+        <item>Перекись водорода</item>
+        <item>Хлоргексидин</item>
+        <item>Спирт этиловый</item>
+        <item>Пластыри</item>
+        <item>Валериана</item>
+        <item>Пустырник</item>
+        <item>Пион</item>
+        <item>Аминофенилмасляная кислота</item>
+        <item>Фабомотизол</item>
+    </string-array>
+</resources>

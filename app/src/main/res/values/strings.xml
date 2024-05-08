@@ -2,7 +2,14 @@
     <string name="app_name">Pharmacy</string>
     <string name="profile">Profile</string>
     <string name="home">Home</string>
+
+    <string name="medicine_description">Описание:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="medicine_description">Описание:</string>
+    <string name="not_yet_registered_sign_up_now">Not yet registered? Sign Up Now</string>
+    <string name="sign_in">Sign In</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
