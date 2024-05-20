@@ -3,18 +3,53 @@ package com.example.pharmacy.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "medicine")
-public class Medicine {
+public class Medicine implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
-    private final int imageResource;
+    private final String name;
     private String description;
-    private final double price;
+    private final String dosage;
+    private final String sideEffects;
+    private final String interactions;
+    private final String type;
 
-    public Medicine(int imageResource, String description, double price) {
-        this.imageResource = imageResource;
+    public Medicine(
+            String name,
+            String description,
+            String dosage,
+            String sideEffects,
+            String interactions,
+            String type
+    ) {
+        this.name = name;
         this.description = description;
-        this.price = price;
+        this.dosage = dosage;
+        this.sideEffects = sideEffects;
+        this.interactions = interactions;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getDosage() {
+        return dosage;
+    }
+
+    public String getSideEffects() {
+        return sideEffects;
+    }
+
+    public String getInteractions() {
+        return interactions;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public long getId() {
@@ -25,10 +60,6 @@ public class Medicine {
         this.id = id;
     }
 
-    public int getImageResource() {
-        return imageResource;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -37,7 +68,4 @@ public class Medicine {
         return description;
     }
 
-    public double getPrice() {
-        return price;
-    }
 }

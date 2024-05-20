@@ -1,17 +1,16 @@
 package com.example.pharmacy.utils;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmacy.R;
+import com.example.pharmacy.databinding.ItemMedicineBinding;
 import com.example.pharmacy.model.Medicine;
 
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ import java.util.List;
 
 public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder> {
     private final List<Medicine> medicineList = new ArrayList<>();
+
     public MedicineListAdapter() {}
 
     @SuppressLint("NotifyDataSetChanged")
@@ -31,44 +31,50 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
     @NonNull
     @Override
     public MedicineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_medicine, parent, false);
-        return new MedicineViewHolder(view);
+        ItemMedicineBinding binding =
+                ItemMedicineBinding.inflate(
+                        LayoutInflater.from(
+                                parent.getContext()
+                        ),
+                        parent,
+                        false
+                );
+        return new MedicineViewHolder(binding);
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull MedicineViewHolder holder, int position) {
         if (position < medicineList.size()) {
             Medicine medicine = medicineList.get(position);
-            holder.imageViewMedicine.setImageResource(medicine.getImageResource());
-            holder.textViewDescription.setText(medicine.getDescription());
-            holder.textViewPrice.setText(String.valueOf(medicine.getPrice()));
-            // Set click listeners or other logic for views in the ViewHolder
+            holder.bind(medicine);
         }
-//        String item = medicineList.get(position).getDescription();
-//        holder.bind(item);
     }
-
 
     @Override
     public int getItemCount() {
         return medicineList.size();
     }
 
-
     public static class MedicineViewHolder extends RecyclerView.ViewHolder {
+        private final ItemMedicineBinding binding;
 
-        public ImageView imageViewMedicine;
-        public TextView textViewDescription;
-        public TextView textViewPrice;
-        public ImageButton btnAdd;
+        public MedicineViewHolder(ItemMedicineBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
 
-        public MedicineViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageViewMedicine = itemView.findViewById(R.id.image_view_medicine);
-            textViewDescription = itemView.findViewById(R.id.text_view_description);
-            textViewPrice = itemView.findViewById(R.id.text_view_price);
-            btnAdd = itemView.findViewById(R.id.btnAdd);
+        public void bind(Medicine medicine) {
+            binding.textViewName.setText(medicine.getName());
+            binding.medType.setHint(medicine.getType());
+            binding.getRoot().setOnClickListener(view -> {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("medicine", medicine);
+                Navigation.findNavController(view)
+                        .navigate(
+                                R.id.action_MedicineListFragment_to_medicineDetailFragment,
+                                bundle
+                        );
+            });
         }
     }
 }

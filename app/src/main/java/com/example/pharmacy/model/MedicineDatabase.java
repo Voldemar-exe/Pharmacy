@@ -7,7 +7,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(entities = {Medicine.class}, version = 1)
-// Specify entities and version
 public abstract class MedicineDatabase extends RoomDatabase {
     public abstract MedicineDao medicineDao();
 

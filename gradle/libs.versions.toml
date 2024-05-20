@@ -8,6 +8,7 @@ lifecycleExtensions = "X.X.X"
 material = "1.11.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
+materialVersion = "1.12.0"
 navigationFragment = "2.7.7"
 legacySupportV4 = "1.0.0"
 lifecycleLivedataKtx = "2.7.0"
@@ -32,6 +33,7 @@ lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", versi
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+material-v1120 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }

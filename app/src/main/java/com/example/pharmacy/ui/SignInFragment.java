@@ -12,17 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.pharmacy.R;
+import com.example.pharmacy.databinding.FragmentSignInBinding;
 
 public class SignInFragment extends Fragment {
+    private FragmentSignInBinding binding;
     public SignInFragment() {
-        // Required empty public constructor
-    }
-
-    public static SignInFragment newInstance(String param1, String param2) {
-        SignInFragment fragment = new SignInFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -31,16 +25,17 @@ public class SignInFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
+        binding = FragmentSignInBinding.inflate(getLayoutInflater());
 
-        View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
-
-        CardView signUpButton = view.findViewById(R.id.btnSignUp);
-        signUpButton.setOnClickListener(v -> Navigation
+        binding.btnSignUp.setOnClickListener(v -> Navigation
                 .findNavController(v)
                 .navigate(R.id.action_signInFragment_to_signUpFragment)
         );
-        return view;
+        return binding.getRoot();
     }
 }

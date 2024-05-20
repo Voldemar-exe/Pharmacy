@@ -15,18 +15,6 @@ public interface MedicineDao {
     @Query("SELECT * FROM medicine")
     LiveData<List<Medicine>> getAllMedicines();
 
-    @Query("SELECT COUNT(*) FROM medicine")
-    LiveData<Integer> getMedicineCount();
-
-    @Query("SELECT * FROM medicine WHERE id = :medicineId")
-    LiveData<Medicine> getMedicineById(long medicineId);
-
-    @Query("SELECT * FROM medicine WHERE price BETWEEN :minPrice AND :maxPrice")
-    LiveData<List<Medicine>> getMedicinesByPriceRange(double minPrice, double maxPrice);
-
-    @Query("SELECT * FROM medicine WHERE description LIKE '%' || :searchQuery || '%'")
-    LiveData<List<Medicine>> searchMedicines(String searchQuery);
-
     @Insert
     void insertMedicine(Medicine medicine);
 

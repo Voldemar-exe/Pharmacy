@@ -87,7 +87,7 @@
             android:id="@+id/signupText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="@dimen/usual"
             android:text="@string/not_yet_registered_sign_up_now"
             android:textAlignment="center"
             android:textColor="@color/purple_500"

@@ -6,22 +6,30 @@
     app:startDestination="@id/MedicineListFragment">
 
     <fragment
-        android:id="@+id/MedicineListFragment"
+        android:id="@id/MedicineListFragment"
         android:name="com.example.pharmacy.ui.MedicineListFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_medicine_list"
-        app:defaultNavHost="true">
+        app:defaultNavHost="true"
+        tools:layout="@layout/fragment_medicine_list">
 
         <action
             android:id="@+id/action_MedicineListFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_MedicineListFragment_to_medicineDetailFragment"
+            app:destination="@id/medicineDetailFragment" />
+        <action
+            android:id="@+id/action_MedicineListFragment_to_filterBottomSheetFragment"
+            app:destination="@id/filterBottomSheetFragment" />
 
     </fragment>
+
 
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.example.pharmacy.ui.SignInFragment"
-        android:label="SignInFragment" >
+        android:label="SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -37,7 +45,7 @@
         android:id="@+id/profileFragment"
         android:name="com.example.pharmacy.ui.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_MedicineListFragment"
             app:destination="@id/MedicineListFragment" />
@@ -46,7 +54,8 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.pharmacy.ui.SignUpFragment"
-        android:label="SignUpFragment" >
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -54,4 +63,22 @@
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/medicineDetailFragment"
+        android:name="com.example.pharmacy.ui.MedicineDetailFragment"
+        android:label="MedicineDetailsFragment"
+        tools:layout="@layout/fragment_medicine_detail" >
+        <action
+            android:id="@+id/action_medicineDetailFragment_to_MedicineListFragment"
+            app:destination="@id/MedicineListFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/filterBottomSheetFragment"
+        android:name="com.example.pharmacy.ui.FilterBottomSheetFragment"
+        android:label="FilterBottomSheetFragment"
+        tools:layout="@layout/filter_bottom_sheet">
+        <action
+            android:id="@+id/action_filterBottomSheetFragment_to_MedicineListFragment"
+            app:destination="@id/MedicineListFragment" />
+    </dialog>
 </navigation>

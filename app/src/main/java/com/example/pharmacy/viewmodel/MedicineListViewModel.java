@@ -6,10 +6,14 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.pharmacy.model.Medicine;
 import com.example.pharmacy.model.MedicineDao;
+import com.example.pharmacy.model.MedicineFiltration;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -25,13 +29,74 @@ public class MedicineListViewModel extends ViewModel {
     private final Scheduler backgroundScheduler = Schedulers.from(backgroundExecutor);
     private final Scheduler mainScheduler = AndroidSchedulers.mainThread();
 
+
     public MedicineListViewModel(MedicineDao medicineDao) {
         this.medicineDao = medicineDao;
         medicineDao.getAllMedicines().observeForever(medicinesLiveData::setValue);
     }
+    public List<Medicine> getFilteredMedicines(MedicineFiltration medicineFiltration){
+        return filterMedicines(
+                medicineFiltration.getSearchText(),
+                medicineFiltration.getTypes(),
+                medicineFiltration.getDosage(),
+                medicineFiltration.getSideEffects(),
+                medicineFiltration.getInteraction()
+        );
+    }
 
-    public void updateMedicine(Medicine medicine) {
-        medicineDao.updateMedicine(medicine);
+    private List<Medicine> filterMedicines(
+            String searchText,
+            String[] types,
+            String dosage,
+            String sideEffects,
+            String interaction
+    ) {
+        List<Medicine> allMedicines = getMedicines().getValue();
+        List<Medicine> filteredMedicines = new ArrayList<>(allMedicines);
+        if (searchText != null && !searchText.isEmpty()) {
+            filteredMedicines = filteredMedicines.stream()
+                    .filter(m -> m.getName().toLowerCase().contains(searchText.toLowerCase()) ||
+                            m.getDescription().toLowerCase().contains(searchText.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        if (types != null && types.length > 0) {
+            filteredMedicines = filteredMedicines.stream()
+                    .filter(m -> Arrays.stream(types)
+                            .anyMatch(type -> m
+                                    .getType()
+                                    .toLowerCase()
+                                    .contains(type.toLowerCase())))
+                    .collect(Collectors.toList());
+        }
+
+        if (dosage != null && !dosage.isEmpty()) {
+            filteredMedicines = filteredMedicines.stream()
+                    .filter(m -> m
+                            .getDosage()
+                            .toLowerCase()
+                            .contains(dosage.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+        if (sideEffects != null && !sideEffects.isEmpty()) {
+            filteredMedicines = filteredMedicines.stream()
+                    .filter(m -> m
+                            .getSideEffects()
+                            .toLowerCase()
+                            .contains(sideEffects.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+        if (interaction != null && !interaction.isEmpty()) {
+            filteredMedicines = filteredMedicines.stream()
+                    .filter(m -> m
+                            .getInteractions()
+                            .toLowerCase()
+                            .contains(interaction.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+        return filteredMedicines;
     }
 
     public void insertMedicine(Medicine medicine) {
@@ -46,17 +111,17 @@ public class MedicineListViewModel extends ViewModel {
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        // Optional: Handle subscription for potential cleanup
+                        // Handle subscription for potential cleanup
                     }
 
                     @Override
                     public void onComplete() {
-                        // Optional: Handle successful insertion (e.g., update UI)
+                        // Handle successful insertion
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        // Handle errors during insertion (e.g., show error message)
+                        // Handle errors during insertion
                     }
                 });
     }
