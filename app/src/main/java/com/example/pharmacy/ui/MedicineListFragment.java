@@ -74,15 +74,17 @@ public class MedicineListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                medicineAdapter.updateItems(medicineListViewModel
-                        .getFilteredMedicines(new MedicineFiltration(
-                                newText,
-                                null,
-                                null,
-                                null,
-                                null)
-                        )
-                );
+                if (medicineListViewModel.getMedicines().isInitialized()){
+                    medicineAdapter.updateItems(medicineListViewModel
+                            .getFilteredMedicines(new MedicineFiltration(
+                                    newText,
+                                    null,
+                                    null,
+                                    null,
+                                    null)
+                            )
+                    );
+                }
                 return false;
             }
         });
@@ -123,7 +125,7 @@ public class MedicineListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 //        addTestMedicines();
         medicineListViewModel.getMedicines().observe(getViewLifecycleOwner(), medicines -> {
-            if (getArguments() != null) {
+            if (getArguments() != null && getArguments().containsKey("filter")){
                 MedicineFiltration medicineFiltration =
                         (MedicineFiltration) getArguments().getSerializable("filter");
                 savedFiltration = medicineFiltration;
