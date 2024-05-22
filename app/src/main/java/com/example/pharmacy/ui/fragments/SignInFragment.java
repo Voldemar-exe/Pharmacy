@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -28,7 +29,7 @@ public class SignInFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater,
+            @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState
     ) {
@@ -59,6 +60,11 @@ public class SignInFragment extends Fragment {
                     if (task.isSuccessful()) {
                         Navigation.findNavController(requireView())
                                 .navigate(R.id.action_signInFragment_to_profileFragment);
+                    }else {
+                        Toast.makeText(
+                                requireContext(),
+                                task.getException().getMessage(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }

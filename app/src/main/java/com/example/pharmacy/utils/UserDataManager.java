@@ -84,9 +84,9 @@ public class UserDataManager {
                     .collection("data")
                     .document(HISTORY_KEY)
                     .set(data)
-                    .addOnSuccessListener(aVoid -> Log.d("Firestore",
+                    .addOnSuccessListener(aVoid -> Log.d(TAG,
                             "DocumentSnapshot successfully updated!"))
-                    .addOnFailureListener(e -> Log.w("Firestore",
+                    .addOnFailureListener(e -> Log.w(TAG,
                             "Error updating document", e));
         }
     }
@@ -95,15 +95,15 @@ public class UserDataManager {
         if (mAuth.getCurrentUser() != null) {
             Map<String, Object> data = new HashMap<>();
             for (Medicine medicine : medicines) {
-                data.put(medicine.getName(), medicines);
+                data.put(medicine.getName(), medicine);
             }
             db.collection(DOCUMENT).document(mAuth.getCurrentUser().getUid())
                     .collection("data")
                     .document(FAVORITES_KEY)
                     .set(data)
-                    .addOnSuccessListener(aVoid -> Log.d("Firestore",
+                    .addOnSuccessListener(aVoid -> Log.d(TAG,
                             "DocumentSnapshot successfully updated!"))
-                    .addOnFailureListener(e -> Log.w("Firestore",
+                    .addOnFailureListener(e -> Log.w(TAG,
                             "Error updating document", e));
         }
     }
@@ -129,7 +129,7 @@ public class UserDataManager {
                             saveHistoryToSharedPreferences(medicines);
                         }
                     })
-                    .addOnFailureListener(e -> Log.w("Firestore",
+                    .addOnFailureListener(e -> Log.w(TAG,
                             "Error reading document", e));
         }
     }

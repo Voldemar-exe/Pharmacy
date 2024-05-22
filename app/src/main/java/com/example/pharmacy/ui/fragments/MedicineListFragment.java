@@ -1,5 +1,7 @@
 package com.example.pharmacy.ui.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -23,8 +25,10 @@ import com.example.pharmacy.utils.MedicineListAdapter;
 import com.example.pharmacy.utils.UserDataManager;
 import com.example.pharmacy.viewmodel.MedicineListViewModel;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.Set;
 
 public class MedicineListFragment extends Fragment implements OnMedicineClickListener {
@@ -34,7 +38,8 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
     private static final int HISTORY_MAX_SIZE = 50;
 
 
-    public MedicineListFragment() {}
+    public MedicineListFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,7 +84,7 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (medicineListViewModel.getMedicines().isInitialized()){
+                if (medicineListViewModel.getMedicines().isInitialized()) {
                     medicineAdapter.updateItems(medicineListViewModel
                             .getFilteredMedicines(new MedicineFiltration(
                                     newText,
@@ -128,9 +133,17 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        addTestMedicines();
+        SharedPreferences sharedPreferences =
+                requireActivity().getPreferences(Context.MODE_PRIVATE);
+        boolean isFirstLaunch =
+                sharedPreferences.getBoolean("first_launch", true);
+
+        if (isFirstLaunch) {
+            addTestMedicines();
+            sharedPreferences.edit().putBoolean("first_launch", false).apply();
+        }
         medicineListViewModel.getMedicines().observe(getViewLifecycleOwner(), medicines -> {
-            if (getArguments() != null && getArguments().containsKey("filter")){
+            if (getArguments() != null && getArguments().containsKey("filter")) {
                 MedicineFiltration medicineFiltration =
                         (MedicineFiltration) getArguments().getSerializable("filter");
                 savedFiltration = medicineFiltration;
@@ -148,11 +161,17 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
         UserDataManager userManager = UserDataManager.getInstance(requireContext());
         userManager.readFavoritesMedicine();
         Set<Medicine> favorites = userManager.getFavoritesFromSharedPreferences();
+
+        if (favorites == null) {
+            favorites = new HashSet<>();
+        }
+
         if (favorites.contains(medicine)) {
             favorites.remove(medicine);
         } else {
             favorites.add(medicine);
         }
+
         userManager.saveFavoritesToSharedPreferences(favorites);
         userManager.updateFavoriteMedicine(favorites);
     }
@@ -162,9 +181,12 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
         UserDataManager userManager = UserDataManager.getInstance(requireContext());
         userManager.readHistoryMedicine();
         Deque<Medicine> history = userManager.getHistoryFromSharedPreferences();
-        history.remove(medicine);
+        if (history != null) {
+            history.remove(medicine);
+        } else {
+            history = new ArrayDeque<>();
+        }
         history.addFirst(medicine);
-
         while (history.size() > HISTORY_MAX_SIZE) {
             history.removeLast();
         }

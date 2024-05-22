@@ -19,6 +19,7 @@ import com.example.pharmacy.utils.MedicineListAdapter;
 import com.example.pharmacy.utils.UserDataManager;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
@@ -62,28 +63,39 @@ public class ProfileFragment extends Fragment implements OnMedicineClickListener
 
         binding.btnHistory.setOnClickListener(v -> Navigation.findNavController(v)
                 .navigate(R.id.action_profileFragment_to_historyFragment));
-
-        favorites = UserDataManager.getInstance(requireContext())
-                .getFavoritesFromSharedPreferences();
-        medicineAdapter.updateItems(new ArrayList<>(favorites));
+        UserDataManager.getInstance(requireContext()).readFavoritesMedicine();
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        favorites = UserDataManager.getInstance(requireContext())
+                .getFavoritesFromSharedPreferences();
+        if (favorites != null){
+            medicineAdapter.updateItems(new ArrayList<>(favorites));
+        }
     }
 
     @Override
     public void onAddToFavoritesClick(Medicine medicine) {
         UserDataManager userManager = UserDataManager.getInstance(requireContext());
+        userManager.readFavoritesMedicine();
+        favorites = userManager.getFavoritesFromSharedPreferences();
+
+        if (favorites == null) {
+            favorites = new HashSet<>();
+        }
+
         if (favorites.contains(medicine)) {
             favorites.remove(medicine);
         } else {
             favorites.add(medicine);
         }
+
         userManager.saveFavoritesToSharedPreferences(favorites);
         userManager.updateFavoriteMedicine(favorites);
+
         medicineAdapter.updateItems(new ArrayList<>(favorites));
     }
 
@@ -92,9 +104,12 @@ public class ProfileFragment extends Fragment implements OnMedicineClickListener
         UserDataManager userManager = UserDataManager.getInstance(requireContext());
         userManager.readHistoryMedicine();
         Deque<Medicine> history = userManager.getHistoryFromSharedPreferences();
-        history.remove(medicine);
+        if (history != null) {
+            history.remove(medicine);
+        } else {
+            history = new ArrayDeque<>();
+        }
         history.addFirst(medicine);
-
         while (history.size() > HISTORY_MAX_SIZE) {
             history.removeLast();
         }

@@ -26,9 +26,7 @@ import java.util.Set;
 public class HistoryFragment extends Fragment implements OnMedicineClickListener {
     private FragmentHistoryBinding binding;
     private MedicineListAdapter medicineAdapter;
-
     private Set<Medicine> favorites = new HashSet<>();
-    private static final int HISTORY_MAX_SIZE = 50;
     private Deque<Medicine> history = new LinkedList<>();
     public HistoryFragment() {}
 
@@ -63,14 +61,21 @@ public class HistoryFragment extends Fragment implements OnMedicineClickListener
     @Override
     public void onAddToFavoritesClick(Medicine medicine) {
         UserDataManager userManager = UserDataManager.getInstance(requireContext());
+        userManager.readFavoritesMedicine();
+        favorites = userManager.getFavoritesFromSharedPreferences();
+
+        if (favorites == null) {
+            favorites = new HashSet<>();
+        }
+
         if (favorites.contains(medicine)) {
             favorites.remove(medicine);
         } else {
             favorites.add(medicine);
         }
+
         userManager.saveFavoritesToSharedPreferences(favorites);
         userManager.updateFavoriteMedicine(favorites);
-        medicineAdapter.updateItems(new ArrayList<>(favorites));
     }
 
     @Override
@@ -78,6 +83,6 @@ public class HistoryFragment extends Fragment implements OnMedicineClickListener
         Bundle bundle = new Bundle();
         bundle.putSerializable("medicine", medicine);
         Navigation.findNavController(requireView())
-                .navigate(R.id.action_profileFragment_to_medicineDetailFragment, bundle);
+                .navigate(R.id.action_historyFragment_to_medicineDetailFragment, bundle);
     }
 }

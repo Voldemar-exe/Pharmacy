@@ -40,9 +40,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/favorites"
+        android:layout_margin="@dimen/usual"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnHistory" />
+        app:layout_constraintTop_toBottomOf="@id/btnExit" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnHistory"
@@ -62,6 +63,6 @@
         app:layout_constraintBottom_toTopOf="@id/btnHistory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnExit" />
+        app:layout_constraintTop_toBottomOf="@id/favorite" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
