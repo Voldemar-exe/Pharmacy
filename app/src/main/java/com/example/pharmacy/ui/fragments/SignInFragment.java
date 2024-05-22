@@ -1,4 +1,4 @@
-package com.example.pharmacy.ui;
+package com.example.pharmacy.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

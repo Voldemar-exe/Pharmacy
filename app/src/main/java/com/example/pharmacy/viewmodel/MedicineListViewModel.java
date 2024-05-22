@@ -34,7 +34,8 @@ public class MedicineListViewModel extends ViewModel {
         this.medicineDao = medicineDao;
         medicineDao.getAllMedicines().observeForever(medicinesLiveData::setValue);
     }
-    public List<Medicine> getFilteredMedicines(MedicineFiltration medicineFiltration){
+
+    public List<Medicine> getFilteredMedicines(MedicineFiltration medicineFiltration) {
         return filterMedicines(
                 medicineFiltration.getSearchText(),
                 medicineFiltration.getTypes(),
@@ -42,6 +43,21 @@ public class MedicineListViewModel extends ViewModel {
                 medicineFiltration.getSideEffects(),
                 medicineFiltration.getInteraction()
         );
+    }
+
+    public List<Medicine> getMedicinesByNames(String[] medicineNames) {
+        List<Medicine> allMedicines = getMedicines().getValue();
+        List<Medicine> filteredMedicines = new ArrayList<>(allMedicines);
+        if (medicineNames.length > 0) {
+            filteredMedicines = filteredMedicines.stream()
+                    .filter(m -> Arrays.stream(medicineNames)
+                            .anyMatch(type -> m
+                                    .getName()
+                                    .toLowerCase()
+                                    .contains(type.toLowerCase())))
+                    .collect(Collectors.toList());
+        }
+        return filteredMedicines;
     }
 
     private List<Medicine> filterMedicines(

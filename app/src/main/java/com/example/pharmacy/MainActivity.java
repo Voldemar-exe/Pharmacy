@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private FirebaseAuth mAuth;
-    private NavController navController; // Store the NavController
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +34,15 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.MedicineListFragment){
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                if (currentUser != null) {
-                    navController.navigate(R.id.action_profileFragment_to_MedicineListFragment);
-                } else {
-                    navController.navigate(R.id.action_signInFragment_to_MedicineListFragment);
-                }
+                navController.navigate(R.id.MedicineListFragment);
                 return true;
             }
             if (itemId == R.id.signInFragment) {
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 if (currentUser != null) {
-                    navController.navigate(R.id.action_MedicineListFragment_to_profileFragment);
+                    navController.navigate(R.id.profileFragment);
                 } else {
-                    navController.navigate(R.id.action_MedicineListFragment_to_signInFragment);
+                    navController.navigate(R.id.signInFragment);
                 }
                 return true;
             }

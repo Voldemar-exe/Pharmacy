@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@id/MedicineListFragment"
-        android:name="com.example.pharmacy.ui.MedicineListFragment"
+        android:name="com.example.pharmacy.ui.fragments.MedicineListFragment"
         android:label="fragment_home"
         app:defaultNavHost="true"
         tools:layout="@layout/fragment_medicine_list">
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.pharmacy.ui.SignInFragment"
+        android:name="com.example.pharmacy.ui.fragments.SignInFragment"
         android:label="SignInFragment"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -46,17 +46,26 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.pharmacy.ui.ProfileFragment"
+        android:name="com.example.pharmacy.ui.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_MedicineListFragment"
             app:destination="@id/MedicineListFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_medicineDetailFragment"
+            app:destination="@id/medicineDetailFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.pharmacy.ui.SignUpFragment"
+        android:name="com.example.pharmacy.ui.fragments.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -68,20 +77,32 @@
     </fragment>
     <fragment
         android:id="@+id/medicineDetailFragment"
-        android:name="com.example.pharmacy.ui.MedicineDetailFragment"
+        android:name="com.example.pharmacy.ui.fragments.MedicineDetailFragment"
         android:label="MedicineDetailsFragment"
-        tools:layout="@layout/fragment_medicine_detail" >
+        tools:layout="@layout/fragment_medicine_detail">
         <action
             android:id="@+id/action_medicineDetailFragment_to_MedicineListFragment"
             app:destination="@id/MedicineListFragment" />
     </fragment>
     <dialog
         android:id="@+id/filterBottomSheetFragment"
-        android:name="com.example.pharmacy.ui.FilterBottomSheetFragment"
+        android:name="com.example.pharmacy.ui.fragments.FilterBottomSheetFragment"
         android:label="FilterBottomSheetFragment"
         tools:layout="@layout/filter_bottom_sheet">
         <action
             android:id="@+id/action_filterBottomSheetFragment_to_MedicineListFragment"
             app:destination="@id/MedicineListFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.pharmacy.ui.fragments.HistoryFragment"
+        android:label="HistoryFragment"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_historyFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_medicineDetailFragment"
+            app:destination="@id/medicineDetailFragment" />
+    </fragment>
 </navigation>

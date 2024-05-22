@@ -1,4 +1,4 @@
-package com.example.pharmacy.ui;
+package com.example.pharmacy.ui.fragments;
 
 import android.os.Bundle;
 import android.text.Html;
@@ -18,16 +18,21 @@ import com.example.pharmacy.databinding.FragmentMedicineListBinding;
 import com.example.pharmacy.model.Medicine;
 import com.example.pharmacy.model.MedicineDatabase;
 import com.example.pharmacy.model.MedicineFiltration;
+import com.example.pharmacy.ui.interfaces.OnMedicineClickListener;
 import com.example.pharmacy.utils.MedicineListAdapter;
+import com.example.pharmacy.utils.UserDataManager;
 import com.example.pharmacy.viewmodel.MedicineListViewModel;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.Set;
 
-public class MedicineListFragment extends Fragment {
+public class MedicineListFragment extends Fragment implements OnMedicineClickListener {
     private MedicineListViewModel medicineListViewModel;
     private MedicineListAdapter medicineAdapter;
-    private FragmentMedicineListBinding binding;
     private MedicineFiltration savedFiltration;
+    private static final int HISTORY_MAX_SIZE = 50;
+
 
     public MedicineListFragment() {}
 
@@ -39,12 +44,12 @@ public class MedicineListFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater,
+            @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState
     ) {
-        binding = FragmentMedicineListBinding.inflate(inflater, container, false);
-        medicineAdapter = new MedicineListAdapter();
+        com.example.pharmacy.databinding.FragmentMedicineListBinding binding = FragmentMedicineListBinding.inflate(inflater, container, false);
+        medicineAdapter = new MedicineListAdapter(this);
 
         binding.medicationsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.medicationsList.setAdapter(medicineAdapter);
@@ -136,5 +141,43 @@ public class MedicineListFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onAddToFavoritesClick(Medicine medicine) {
+        UserDataManager userManager = UserDataManager.getInstance(requireContext());
+        userManager.readFavoritesMedicine();
+        Set<Medicine> favorites = userManager.getFavoritesFromSharedPreferences();
+        if (favorites.contains(medicine)) {
+            favorites.remove(medicine);
+        } else {
+            favorites.add(medicine);
+        }
+        userManager.saveFavoritesToSharedPreferences(favorites);
+        userManager.updateFavoriteMedicine(favorites);
+    }
+
+    @Override
+    public void onMedicineCardClick(Medicine medicine) {
+        UserDataManager userManager = UserDataManager.getInstance(requireContext());
+        userManager.readHistoryMedicine();
+        Deque<Medicine> history = userManager.getHistoryFromSharedPreferences();
+        history.remove(medicine);
+        history.addFirst(medicine);
+
+        while (history.size() > HISTORY_MAX_SIZE) {
+            history.removeLast();
+        }
+
+        userManager.saveHistoryToSharedPreferences(history);
+        userManager.updateHistoryMedicine(history);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("medicine", medicine);
+        Navigation.findNavController(requireView())
+                .navigate(
+                        R.id.action_MedicineListFragment_to_medicineDetailFragment,
+                        bundle
+                );
     }
 }

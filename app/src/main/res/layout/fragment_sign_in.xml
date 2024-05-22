@@ -28,7 +28,7 @@
                 android:id="@+id/loginText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sign_in"
+                android:text="@string/sign_in_main"
                 android:textAlignment="center"
                 android:textColor="@color/purple_500"
                 android:textSize="36sp"
@@ -42,7 +42,7 @@
                 android:background="@drawable/black_border"
                 android:drawableStart="@drawable/ic_user"
                 android:drawablePadding="8dp"
-                android:hint="@string/username"
+                android:hint="@string/email"
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textColorHighlight="@color/cardview_dark_background" />

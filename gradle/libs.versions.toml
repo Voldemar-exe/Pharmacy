@@ -1,6 +1,7 @@
 [versions]
 agp = "8.3.1"
 firebaseBom = "33.0.0"
+gson = "2.10.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -23,10 +24,13 @@ rxandroidVersion = "3.1.0"
 rxjava = "3.x.y"
 rxjavaVersion = "3.1.8"
 rxandroid = "3.0.2"
+firebaseFirestore = "25.0.0"
+composePreviewRenderer = "0.0.1-alpha01"
 
 [libraries]
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -51,6 +55,8 @@ rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 rxjava-v318 = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjavaVersion" }
 rxjava3-rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroidVersion" }
 rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+compose-preview-renderer = { group = "com.android.tools.compose", name = "compose-preview-renderer", version.ref = "composePreviewRenderer" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

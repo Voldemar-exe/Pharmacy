@@ -1,17 +1,15 @@
 package com.example.pharmacy.utils;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.ItemMedicineBinding;
 import com.example.pharmacy.model.Medicine;
+import com.example.pharmacy.ui.interfaces.OnMedicineClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +17,11 @@ import java.util.List;
 public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder> {
     private final List<Medicine> medicineList = new ArrayList<>();
 
-    public MedicineListAdapter() {}
+    private static OnMedicineClickListener listener;
+
+    public MedicineListAdapter(OnMedicineClickListener listener) {
+        MedicineListAdapter.listener = listener;
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     public void updateItems(List<Medicine> newMedicineList) {
@@ -66,14 +68,15 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
         public void bind(Medicine medicine) {
             binding.textViewName.setText(medicine.getName());
             binding.medType.setHint(medicine.getType());
+            binding.btnAdd.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onAddToFavoritesClick(medicine);
+                }
+            });
             binding.getRoot().setOnClickListener(view -> {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("medicine", medicine);
-                Navigation.findNavController(view)
-                        .navigate(
-                                R.id.action_MedicineListFragment_to_medicineDetailFragment,
-                                bundle
-                        );
+                if (listener != null) {
+                    listener.onMedicineCardClick(medicine);
+                }
             });
         }
     }

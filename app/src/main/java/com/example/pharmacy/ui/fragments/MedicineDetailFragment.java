@@ -1,4 +1,4 @@
-package com.example.pharmacy.ui;
+package com.example.pharmacy.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.FragmentMedicineDetailBinding;
 import com.example.pharmacy.model.Medicine;
 
@@ -20,17 +19,15 @@ public class MedicineDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater,
+            @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState
     ) {
         binding = FragmentMedicineDetailBinding.inflate(inflater, container, false);
         binding.btnBack.setOnClickListener(view ->
                 Navigation
-                .findNavController(view)
-                .navigate(
-                        R.id.action_medicineDetailFragment_to_MedicineListFragment
-                ));
+                .findNavController(view).popBackStack()
+        );
         return binding.getRoot();
     }
 

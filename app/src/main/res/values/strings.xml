@@ -2,12 +2,12 @@
     <string name="app_name">Pharmacy</string>
     <string name="profile">Профиль</string>
     <string name="home">Дом</string>
-
     <string name="medicine_description">Описание:</string>
     <string name="not_yet_registered_sign_up_now">Еще не зарегистрированы? Зарегистрироваться</string>
     <string name="sign_in">Войти</string>
     <string name="password">Пароль</string>
     <string name="username">Имя пользователя</string>
+    <string name="email">Почта</string>
     <string name="confirm_password">Подтверждение пароля</string>
     <string name="sign_up">Регистрация</string>
     <string name="enter_medicine">Введите название лекарства</string>
@@ -15,4 +15,11 @@
     <string name="text_search_medicine">Поиск лекарств</string>
     <string name="med_name">Имя</string>
     <string name="test">Test</string>
+    <string name="search_history">История просмостра</string>
+    <string name="history">История</string>
+    <string name="favorites">Избранное</string>
+    <string name="exit_account">Выйти из аккаунта</string>
+    <string name="sign_in_main">Вход</string>
+    <string name="to_sign_up">Зарегистрировать</string>
+    <string name="back">Назад</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.pharmacy.ui;
+package com.example.pharmacy.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,48 +24,60 @@ import java.util.Set;
 public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
     private FilterBottomSheetBinding binding;
     private MedicineFiltration savedFiltration;
+    private Chip[] medicineChips;
+    private String[] medicineArray;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.savedFiltration = new MedicineFiltration();
+        this.medicineArray = getResources().getStringArray(R.array.medicine_types);
+        this.medicineChips = new Chip[medicineArray.length];
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FilterBottomSheetBinding.inflate(getLayoutInflater());
-        String[] medicineArray = getResources().getStringArray(R.array.medicine_types);
-
-        Set<String> uniqueMedicinesSet = new HashSet<>(Arrays.asList(medicineArray));
-
-        for (String medicine : uniqueMedicinesSet) {
-            Chip chip = new Chip(requireContext());
-            chip.setText(medicine);
-            chip.setCheckable(true);
-            binding.typeChips.addView(chip);
-        }
-        binding.button.setOnClickListener(v -> applyFiltersAndNavigate());
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (getArguments() != null) {
-            MedicineFiltration receivedFiltration =
-                    (MedicineFiltration) getArguments().getSerializable("filter");
-            if (receivedFiltration != null) {
-                savedFiltration = receivedFiltration;
-                restoreFilters(savedFiltration);
+        Set<String> uniqueMedicinesSet = new HashSet<>(Arrays.asList(medicineArray));
+
+        for (int i = 0; i < medicineArray.length; i++) {
+            medicineChips[i] = new Chip(requireContext());
+            medicineChips[i].setText(medicineArray[i]);
+            medicineChips[i].setCheckable(true);
+            medicineChips[i].setVisibility(View.GONE);
+            binding.typeChips.addView(medicineChips[i]);
+        }
+
+        for (String medicine : uniqueMedicinesSet) {
+            for (Chip chip : medicineChips) {
+                if (chip.getText().toString().equals(medicine)) {
+                    chip.setVisibility(View.VISIBLE);
+                    break;
+                }
             }
+        }
+
+        binding.button.setOnClickListener(v -> applyFiltersAndNavigate());
+        super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null && getArguments().containsKey("filter")) {
+            savedFiltration = (MedicineFiltration) getArguments().getSerializable("filter");
+            restoreFilters(savedFiltration);
         }
     }
 
     private void applyFiltersAndNavigate() {
         ArrayList<String> types = new ArrayList<>();
-        for (int chipId : binding.typeChips.getCheckedChipIds()) {
-            types.add(((Chip) binding.typeChips.findViewById(chipId)).getText().toString());
+        for (int i = 0; i < binding.typeChips.getChildCount(); i++) {
+            Chip chip = (Chip) binding.typeChips.getChildAt(i);
+            if (chip.isChecked()) {
+                types.add(chip.getText().toString());
+            }
         }
 
         savedFiltration = new MedicineFiltration(

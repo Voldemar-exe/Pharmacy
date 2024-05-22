@@ -13,21 +13,23 @@
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        android:layout_marginStart="30dp"
         android:layout_gravity="start"
-        android:clickable="true">
+        android:layout_marginStart="30dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="20dp">
 
         <TextView
             android:id="@+id/signupText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Back"
+            android:text="@string/back"
             android:textColor="@color/purple_500"
             android:textSize="14sp" />
 
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,10 +64,11 @@
                 android:background="@drawable/black_border"
                 android:drawableStart="@drawable/ic_user"
                 android:drawablePadding="8dp"
-                android:hint="@string/username"
+                android:hint="@string/email"
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textColorHighlight="@color/cardview_dark_background" />
+
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
@@ -100,7 +103,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/purple_200"
-                android:text="@string/sign_up"
+                android:text="@string/to_sign_up"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
 

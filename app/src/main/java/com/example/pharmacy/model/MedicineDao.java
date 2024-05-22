@@ -14,6 +14,8 @@ public interface MedicineDao {
 
     @Query("SELECT * FROM medicine")
     LiveData<List<Medicine>> getAllMedicines();
+    @Query("SELECT * FROM medicine WHERE name IN (:names)")
+    List<Medicine> getMedicinesByNames(List<String> names);
 
     @Insert
     void insertMedicine(Medicine medicine);
