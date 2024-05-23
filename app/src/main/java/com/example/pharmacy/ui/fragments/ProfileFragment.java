@@ -32,7 +32,8 @@ public class ProfileFragment extends Fragment implements OnMedicineClickListener
     private static final int HISTORY_MAX_SIZE = 50;
     private MedicineListAdapter medicineAdapter;
 
-    public ProfileFragment() {}
+    public ProfileFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,9 +73,10 @@ public class ProfileFragment extends Fragment implements OnMedicineClickListener
         super.onViewCreated(view, savedInstanceState);
         favorites = UserDataManager.getInstance(requireContext())
                 .getFavoritesFromSharedPreferences();
-        if (favorites != null){
-            medicineAdapter.updateItems(new ArrayList<>(favorites));
+        if (favorites == null) {
+            favorites = new HashSet<>();
         }
+        medicineAdapter.updateItems(new ArrayList<>(favorites));
     }
 
     @Override

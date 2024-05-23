@@ -18,21 +18,18 @@ import com.google.android.material.chip.Chip;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
     private FilterBottomSheetBinding binding;
     private MedicineFiltration savedFiltration;
     private Chip[] medicineChips;
-    private String[] medicineArray;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.savedFiltration = new MedicineFiltration();
-        this.medicineArray = getResources().getStringArray(R.array.medicine_types);
-        this.medicineChips = new Chip[medicineArray.length];
+        savedFiltration = new MedicineFiltration();
+
     }
 
     @Nullable
@@ -44,27 +41,25 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Set<String> uniqueMedicinesSet = new HashSet<>(Arrays.asList(medicineArray));
-
-        for (int i = 0; i < medicineArray.length; i++) {
-            medicineChips[i] = new Chip(requireContext());
-            medicineChips[i].setText(medicineArray[i]);
-            medicineChips[i].setCheckable(true);
-            medicineChips[i].setVisibility(View.GONE);
-            binding.typeChips.addView(medicineChips[i]);
-        }
-
-        for (String medicine : uniqueMedicinesSet) {
-            for (Chip chip : medicineChips) {
-                if (chip.getText().toString().equals(medicine)) {
-                    chip.setVisibility(View.VISIBLE);
-                    break;
-                }
+        super.onViewCreated(view, savedInstanceState);
+        if (medicineChips == null){
+            Set<String> uniqueMedicinesSet = new HashSet<>(
+                    Arrays.asList(getResources().getStringArray(R.array.medicine_types))
+            );
+            medicineChips = new Chip[uniqueMedicinesSet.size()];
+            for (String medicine : uniqueMedicinesSet) {
+                Chip chip = new Chip(requireContext());
+                chip.setText(medicine);
+                chip.setCheckable(true);
+                binding.typeChips.addView(chip);
+            }
+        } else {
+            for (Chip medicineChip : medicineChips) {
+                binding.typeChips.addView(medicineChip);
             }
         }
 
         binding.button.setOnClickListener(v -> applyFiltersAndNavigate());
-        super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null && getArguments().containsKey("filter")) {
             savedFiltration = (MedicineFiltration) getArguments().getSerializable("filter");
             restoreFilters(savedFiltration);
@@ -101,7 +96,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
         if (filter == null) return;
 
         if (filter.getTypes() != null) {
-            List<String> selectedTypes = Arrays.asList(filter.getTypes());
+            Set<String> selectedTypes = new HashSet<>(Arrays.asList(filter.getTypes()));
             for (int i = 0; i < binding.typeChips.getChildCount(); i++) {
                 Chip chip = (Chip) binding.typeChips.getChildAt(i);
                 if (selectedTypes.contains(chip.getText().toString())) {

@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_MedicineListFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_MedicineListFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
 
     </fragment>
 
@@ -42,6 +45,9 @@
         <action
             android:id="@+id/action_signInFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
     </fragment>
 
     <fragment
@@ -61,6 +67,9 @@
         <action
             android:id="@+id/action_profileFragment_to_medicineDetailFragment"
             app:destination="@id/medicineDetailFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
     </fragment>
 
     <fragment
@@ -104,5 +113,20 @@
         <action
             android:id="@+id/action_historyFragment_to_medicineDetailFragment"
             app:destination="@id/medicineDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.example.pharmacy.ui.fragments.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" >
+        <action
+            android:id="@+id/action_infoFragment_to_MedicineListFragment"
+            app:destination="@id/MedicineListFragment" />
+        <action
+            android:id="@+id/action_infoFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_infoFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
 </navigation>

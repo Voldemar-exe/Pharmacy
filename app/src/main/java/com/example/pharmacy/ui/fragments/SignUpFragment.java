@@ -55,12 +55,12 @@ public class SignUpFragment extends Fragment {
 
             if (!password.equals(confirmPassword)) {
                 Toast.makeText(requireContext(),
-                        "Passwords do not match", Toast.LENGTH_SHORT).show();
+                        "Пароли должны совпадать", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (email.isEmpty() || password.isEmpty() || username.isEmpty()){
                 Toast.makeText(requireContext(),
-                        "Please fill all fields", Toast.LENGTH_SHORT).show();
+                        "Заполните все поля", Toast.LENGTH_SHORT).show();
                 return;
             }
             String emailRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)" +
@@ -69,12 +69,12 @@ public class SignUpFragment extends Fragment {
             Matcher matcher = pattern.matcher(email);
             if (!matcher.matches()) {
                 Toast.makeText(requireContext(),
-                        "Invalid email format.", Toast.LENGTH_SHORT).show();
+                        "Неверный формат почты", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (password.length() < 6){
                 Toast.makeText(requireContext(),
-                        "Password must be longer than 6", Toast.LENGTH_SHORT).show();
+                        "Пароль должен быть больше 6", Toast.LENGTH_SHORT).show();
                 return;
             }
             registerUser(email, password, username);

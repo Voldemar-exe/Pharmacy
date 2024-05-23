@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.example.pharmacy.ui.interfaces.OnMedicineClickListener;
 import com.example.pharmacy.utils.MedicineListAdapter;
 import com.example.pharmacy.utils.UserDataManager;
 import com.example.pharmacy.viewmodel.MedicineListViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
     private MedicineListViewModel medicineListViewModel;
     private MedicineListAdapter medicineAdapter;
     private MedicineFiltration savedFiltration;
+    private FirebaseAuth mAuth;
     private static final int HISTORY_MAX_SIZE = 50;
 
 
@@ -44,7 +47,8 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.savedFiltration = new MedicineFiltration();
+        savedFiltration = new MedicineFiltration();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -53,7 +57,8 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
             ViewGroup container,
             Bundle savedInstanceState
     ) {
-        com.example.pharmacy.databinding.FragmentMedicineListBinding binding = FragmentMedicineListBinding.inflate(inflater, container, false);
+        FragmentMedicineListBinding binding =
+                FragmentMedicineListBinding.inflate(inflater, container, false);
         medicineAdapter = new MedicineListAdapter(this);
 
         binding.medicationsList.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -158,42 +163,48 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
 
     @Override
     public void onAddToFavoritesClick(Medicine medicine) {
-        UserDataManager userManager = UserDataManager.getInstance(requireContext());
-        userManager.readFavoritesMedicine();
-        Set<Medicine> favorites = userManager.getFavoritesFromSharedPreferences();
+        if (mAuth.getCurrentUser() != null) {
+            UserDataManager userManager = UserDataManager.getInstance(requireContext());
+            userManager.readFavoritesMedicine();
+            Set<Medicine> favorites = userManager.getFavoritesFromSharedPreferences();
 
-        if (favorites == null) {
-            favorites = new HashSet<>();
-        }
+            if (favorites == null) {
+                favorites = new HashSet<>();
+            }
 
-        if (favorites.contains(medicine)) {
-            favorites.remove(medicine);
+            if (favorites.contains(medicine)) {
+                favorites.remove(medicine);
+            } else {
+                favorites.add(medicine);
+            }
+
+            userManager.saveFavoritesToSharedPreferences(favorites);
+            userManager.updateFavoriteMedicine(favorites);
+
         } else {
-            favorites.add(medicine);
+            Toast.makeText(requireContext(), "Зарегистрируйтесь", Toast.LENGTH_SHORT).show();
         }
-
-        userManager.saveFavoritesToSharedPreferences(favorites);
-        userManager.updateFavoriteMedicine(favorites);
     }
 
     @Override
     public void onMedicineCardClick(Medicine medicine) {
-        UserDataManager userManager = UserDataManager.getInstance(requireContext());
-        userManager.readHistoryMedicine();
-        Deque<Medicine> history = userManager.getHistoryFromSharedPreferences();
-        if (history != null) {
-            history.remove(medicine);
-        } else {
-            history = new ArrayDeque<>();
-        }
-        history.addFirst(medicine);
-        while (history.size() > HISTORY_MAX_SIZE) {
-            history.removeLast();
-        }
+        if (mAuth.getCurrentUser() != null) {
+            UserDataManager userManager = UserDataManager.getInstance(requireContext());
+            userManager.readHistoryMedicine();
+            Deque<Medicine> history = userManager.getHistoryFromSharedPreferences();
+            if (history != null) {
+                history.remove(medicine);
+            } else {
+                history = new ArrayDeque<>();
+            }
+            history.addFirst(medicine);
+            while (history.size() > HISTORY_MAX_SIZE) {
+                history.removeLast();
+            }
 
-        userManager.saveHistoryToSharedPreferences(history);
-        userManager.updateHistoryMedicine(history);
-
+            userManager.saveHistoryToSharedPreferences(history);
+            userManager.updateHistoryMedicine(history);
+        }
         Bundle bundle = new Bundle();
         bundle.putSerializable("medicine", medicine);
         Navigation.findNavController(requireView())

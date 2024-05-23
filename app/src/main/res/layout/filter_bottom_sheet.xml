@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Фильтры для лекарств"
+        android:text="@string/filters"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Тип:" />
+        android:text="@string/type" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -36,45 +36,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Дозировка:" />
+        android:text="@string/dosage" />
 
     <EditText
         android:id="@+id/inputDosage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите дозировку в мг или шт"
+        android:hint="@string/input_dosage"
         android:inputType="number" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Побочные эффекты:" />
+        android:text="@string/side_effects" />
 
     <EditText
         android:id="@+id/inputSideEffects"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите побочные эффекты"
-        android:inputType="number" />
+        android:hint="@string/input_side_effects"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Взаимодействие:" />
+        android:text="@string/interaction" />
 
     <EditText
         android:id="@+id/inputInteraction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите как принимать лекарство"
-        android:inputType="numberDecimal" />
+        android:hint="@string/input_interactions" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Применить фильтр" />
+        android:text="@string/put_filter" />
 </LinearLayout>

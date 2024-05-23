@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-
     private ActivityMainBinding binding;
     private FirebaseAuth mAuth;
     private NavController navController;
@@ -44,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     navController.navigate(R.id.signInFragment);
                 }
+                return true;
+            }
+            if (itemId == R.id.infoFragment){
+                navController.navigate(R.id.infoFragment);
                 return true;
             }
             return false;

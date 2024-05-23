@@ -22,4 +22,27 @@
     <string name="sign_in_main">Вход</string>
     <string name="to_sign_up">Зарегистрировать</string>
     <string name="back">Назад</string>
+    <string name="about">О программе</string>
+    <string name="name">Нилов Владимир Владимирович</string>
+    <string name="group">ИКБО–06–22</string>
+    <string name="year">2024</string>
+    <string name="addos123_yandex_ru">addos123@yandex.ru</string>
+    <string name="about_author">Об авторе</string>
+    <string name="app_description">
+    Наше приложение позволяет: \n
+    • Находить нужные лекарства: Просматривайте информацию о каждом препарате (описание, дозировка и тд)\n\n
+    • Использовать удобные фильтры: Быстро находите нужные лекарства по типам, дозировке и другим параметрам.\n\n
+    • Регистрируйтесь для получения доступа к расширенным функциям приложения: сохранение истории просмотров и списка избранных препаратов.\n\n
+    • Сохранять историю просмотров: Легко возвращайтесь к ранее просмотренным препаратам.\n\n
+    • Создавать список избранного: Сохраняйте часто используемые лекарства в удобном списке для быстрого доступа.
+    </string>
+    <string name="put_filter">Применить фильтр</string>
+    <string name="input_interactions">Введите как принимать лекарство</string>
+    <string name="interaction">Взаимодействие:</string>
+    <string name="input_side_effects">Введите побочные эффекты</string>
+    <string name="side_effects">Побочные эффекты:</string>
+    <string name="input_dosage">Введите дозировку в мг или шт</string>
+    <string name="dosage">Дозировка:</string>
+    <string name="filters">Фильтры для лекарств</string>
+    <string name="type">Тип:</string>
 </resources>

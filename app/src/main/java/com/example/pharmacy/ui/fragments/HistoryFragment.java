@@ -17,6 +17,7 @@ import com.example.pharmacy.ui.interfaces.OnMedicineClickListener;
 import com.example.pharmacy.utils.MedicineListAdapter;
 import com.example.pharmacy.utils.UserDataManager;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
@@ -50,7 +51,9 @@ public class HistoryFragment extends Fragment implements OnMedicineClickListener
 
         history = UserDataManager.getInstance(requireContext())
                 .getHistoryFromSharedPreferences();
-
+        if (history == null) {
+            history = new ArrayDeque<>();
+        }
         medicineAdapter.updateItems(new ArrayList<>(history));
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v)
                 .popBackStack());

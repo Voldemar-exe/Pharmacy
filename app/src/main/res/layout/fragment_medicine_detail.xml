@@ -11,15 +11,21 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:src="@drawable/back_button"/>
-
-    <TextView
-        android:id="@+id/medicineName"
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Название лекарства"
         android:layout_gravity="center"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        app:cardCornerRadius="@dimen/usual">
+        <TextView
+            android:id="@+id/medicineName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/usual"
+            android:text="Название лекарства"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,26 +40,30 @@
 
             <TextView
                 android:id="@+id/medicineDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="19sp"
                 android:text="Описание" />
 
             <TextView
                 android:id="@+id/medicineDosage"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="19sp"
                 android:text="Дозировка" />
 
             <TextView
                 android:id="@+id/medicineSideEffects"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="19sp"
                 android:text="Побочные эффекты" />
 
             <TextView
                 android:id="@+id/medicineInteractions"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="19sp"
                 android:text="Взаимодействия" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

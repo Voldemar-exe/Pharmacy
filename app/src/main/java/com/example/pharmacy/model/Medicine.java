@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 @Entity(tableName = "medicine")
 public class Medicine implements Serializable {
@@ -16,6 +17,7 @@ public class Medicine implements Serializable {
     private final String sideEffects;
     private final String interactions;
     private final String type;
+
     public Medicine(
             String name,
             String description,
@@ -31,7 +33,8 @@ public class Medicine implements Serializable {
         this.interactions = interactions;
         this.type = type;
     }
-    public Medicine(Map<String, Object> data){
+
+    public Medicine(Map<String, Object> data) {
         this.id = (Long) data.get("id");
         this.name = (String) data.get("name");
         this.description = (String) data.get("description");
@@ -40,6 +43,20 @@ public class Medicine implements Serializable {
         this.interactions = (String) data.get("interactions");
         this.type = (String) data.get("type");
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Medicine medicine = (Medicine) o;
+        return id == medicine.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     public String getType() {
         return type;
     }

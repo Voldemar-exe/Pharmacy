@@ -47,7 +47,7 @@ public class SignInFragment extends Fragment {
             if (!email.isEmpty() && !password.isEmpty()) {
                 signInUser(email, password);
             } else {
-                Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Заполните все поля", Toast.LENGTH_SHORT).show();
             }
         });
 
