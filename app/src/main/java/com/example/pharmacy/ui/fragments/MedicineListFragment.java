@@ -174,8 +174,14 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
 
             if (favorites.contains(medicine)) {
                 favorites.remove(medicine);
+                Toast.makeText(requireContext(),
+                        "Удалено из избранного",
+                        Toast.LENGTH_SHORT).show();
             } else {
                 favorites.add(medicine);
+                Toast.makeText(requireContext(),
+                        "Добавлено в избранное",
+                        Toast.LENGTH_SHORT).show();
             }
 
             userManager.saveFavoritesToSharedPreferences(favorites);
