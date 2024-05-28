@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.MedicineListFragment){
+            if (itemId == R.id.MedicineListFragment) {
                 navController.navigate(R.id.MedicineListFragment);
                 return true;
             }
@@ -45,11 +45,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             }
-            if (itemId == R.id.infoFragment){
+            if (itemId == R.id.infoFragment) {
                 navController.navigate(R.id.infoFragment);
                 return true;
             }
             return false;
         });
+
     }
 }

@@ -13,14 +13,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.FragmentMedicineListBinding;
 import com.example.pharmacy.model.Medicine;
 import com.example.pharmacy.model.MedicineDatabase;
 import com.example.pharmacy.model.MedicineFiltration;
+import com.example.pharmacy.ui.interfaces.OnCheckIsFavorite;
 import com.example.pharmacy.ui.interfaces.OnMedicineClickListener;
 import com.example.pharmacy.utils.MedicineListAdapter;
 import com.example.pharmacy.utils.UserDataManager;
@@ -33,12 +37,18 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MedicineListFragment extends Fragment implements OnMedicineClickListener {
+public class MedicineListFragment
+        extends Fragment
+        implements OnMedicineClickListener, OnCheckIsFavorite {
+
+    private FragmentMedicineListBinding binding;
     private MedicineListViewModel medicineListViewModel;
     private MedicineListAdapter medicineAdapter;
     private MedicineFiltration savedFiltration;
     private FirebaseAuth mAuth;
     private static final int HISTORY_MAX_SIZE = 50;
+    private ViewModelProvider.Factory viewModelFactory;
+    private int savedScrollPosition = 0;
 
 
     public MedicineListFragment() {
@@ -49,6 +59,15 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
         super.onCreate(savedInstanceState);
         savedFiltration = new MedicineFiltration();
         mAuth = FirebaseAuth.getInstance();
+        viewModelFactory = new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new MedicineListViewModel(
+                        MedicineDatabase.getInstance(requireContext()).medicineDao()
+                );
+            }
+        };
     }
 
     @Override
@@ -57,21 +76,28 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
             ViewGroup container,
             Bundle savedInstanceState
     ) {
-        FragmentMedicineListBinding binding =
-                FragmentMedicineListBinding.inflate(inflater, container, false);
-        medicineAdapter = new MedicineListAdapter(this);
+        binding = FragmentMedicineListBinding.inflate(inflater, container, false);
+        if (savedScrollPosition != 0) {
+            binding.medicationsList.smoothScrollToPosition(savedScrollPosition);
+        }
+        medicineAdapter = new MedicineListAdapter(this, this);
 
-        binding.medicationsList.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.medicationsList.setAdapter(medicineAdapter);
-
-        medicineListViewModel =
-                new MedicineListViewModel(
-                        MedicineDatabase.getInstance(requireContext()).medicineDao()
-                );
+        medicineListViewModel = new ViewModelProvider(this, viewModelFactory)
+                .get(MedicineListViewModel.class);
         medicineListViewModel
                 .getMedicines()
                 .observe(getViewLifecycleOwner(), medicineAdapter::updateItems);
+        binding.medicationsList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.medicationsList.setAdapter(medicineAdapter);
+        binding.medicationsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                savedScrollPosition = layoutManager.findFirstVisibleItemPosition();
+            }
+        });
         binding.btnFilter.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("filter", savedFiltration);
@@ -174,18 +200,15 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
 
             if (favorites.contains(medicine)) {
                 favorites.remove(medicine);
-                Toast.makeText(requireContext(),
-                        "Удалено из избранного",
-                        Toast.LENGTH_SHORT).show();
             } else {
                 favorites.add(medicine);
-                Toast.makeText(requireContext(),
-                        "Добавлено в избранное",
-                        Toast.LENGTH_SHORT).show();
             }
-
             userManager.saveFavoritesToSharedPreferences(favorites);
             userManager.updateFavoriteMedicine(favorites);
+            int position = medicineAdapter.getMedicineList().indexOf(medicine);
+            if (position != -1) {
+                medicineAdapter.notifyItemChanged(position);
+            }
 
         } else {
             Toast.makeText(requireContext(), "Зарегистрируйтесь", Toast.LENGTH_SHORT).show();
@@ -218,5 +241,13 @@ public class MedicineListFragment extends Fragment implements OnMedicineClickLis
                         R.id.action_MedicineListFragment_to_medicineDetailFragment,
                         bundle
                 );
+    }
+
+    @Override
+    public boolean isFavorite(Medicine medicine) {
+        UserDataManager userManager = UserDataManager.getInstance(requireContext());
+        userManager.readFavoritesMedicine();
+        Set<Medicine> favorites = userManager.getFavoritesFromSharedPreferences();
+        return favorites.contains(medicine);
     }
 }

@@ -42,7 +42,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (medicineChips == null){
+        if (medicineChips == null) {
             Set<String> uniqueMedicinesSet = new HashSet<>(
                     Arrays.asList(getResources().getStringArray(R.array.medicine_types))
             );
@@ -60,6 +60,16 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
         }
 
         binding.button.setOnClickListener(v -> applyFiltersAndNavigate());
+        binding.clear.setOnClickListener(v -> {
+            clearFilters();
+            savedFiltration = new MedicineFiltration(
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
+        });
         if (getArguments() != null && getArguments().containsKey("filter")) {
             savedFiltration = (MedicineFiltration) getArguments().getSerializable("filter");
             restoreFilters(savedFiltration);
@@ -90,6 +100,13 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
                         R.id.action_filterBottomSheetFragment_to_MedicineListFragment,
                         bundle
                 );
+    }
+
+    private void clearFilters() {
+        binding.typeChips.clearCheck();
+        binding.inputDosage.setText("");
+        binding.inputSideEffects.setText("");
+        binding.inputInteraction.setText("");
     }
 
     private void restoreFilters(MedicineFiltration filter) {

@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.ItemMedicineBinding;
 import com.example.pharmacy.model.Medicine;
+import com.example.pharmacy.ui.interfaces.OnCheckIsFavorite;
 import com.example.pharmacy.ui.interfaces.OnMedicineClickListener;
 
 import java.util.ArrayList;
@@ -17,10 +19,12 @@ import java.util.List;
 public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder> {
     private final List<Medicine> medicineList = new ArrayList<>();
 
-    private static OnMedicineClickListener listener;
+    private static OnMedicineClickListener listenerClick;
+    private static OnCheckIsFavorite listenerFavorite;
 
-    public MedicineListAdapter(OnMedicineClickListener listener) {
-        MedicineListAdapter.listener = listener;
+    public MedicineListAdapter(OnMedicineClickListener listenerClick, OnCheckIsFavorite listenerFavorite) {
+        MedicineListAdapter.listenerClick = listenerClick;
+        MedicineListAdapter.listenerFavorite = listenerFavorite;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -56,6 +60,9 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
     public int getItemCount() {
         return medicineList.size();
     }
+    public List<Medicine> getMedicineList(){
+        return medicineList;
+    }
 
     public static class MedicineViewHolder extends RecyclerView.ViewHolder {
         private final ItemMedicineBinding binding;
@@ -69,15 +76,20 @@ public class MedicineListAdapter extends RecyclerView.Adapter<MedicineListAdapte
             binding.textViewName.setText(medicine.getName());
             binding.medType.setHint(medicine.getType());
             binding.btnAdd.setOnClickListener(v -> {
-                if (listener != null) {
-                    listener.onAddToFavoritesClick(medicine);
+                if (listenerClick != null) {
+                    listenerClick.onAddToFavoritesClick(medicine);
                 }
             });
             binding.getRoot().setOnClickListener(view -> {
-                if (listener != null) {
-                    listener.onMedicineCardClick(medicine);
+                if (listenerClick != null) {
+                    listenerClick.onMedicineCardClick(medicine);
                 }
             });
+            if (listenerFavorite.isFavorite(medicine)){
+                binding.btnAdd.setImageResource(R.drawable.ic_favorite);
+            } else {
+                binding.btnAdd.setImageResource(R.drawable.ic_unfavorite);
+            }
         }
     }
 }

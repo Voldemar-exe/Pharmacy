@@ -1,70 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="16dp">
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:src="@drawable/back_button"/>
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:cardCornerRadius="@dimen/usual">
-        <TextView
-            android:id="@+id/medicineName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/usual"
-            android:text="Название лекарства"
-            android:layout_gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:cardCornerRadius="@dimen/usual"
-        android:layout_margin="@dimen/usual">
-        <LinearLayout
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            style="?attr/materialIconButtonFilledStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/usual"
-            android:orientation="vertical">
+            app:icon="@drawable/back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/medicineNameCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardCornerRadius="@dimen/usual"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBack">
 
             <TextView
-                android:id="@+id/medicineDescription"
+                android:id="@+id/medicineName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="19sp"
-                android:text="Описание" />
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/usual"
+                android:text="@string/med_name"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/medicineDosage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="19sp"
-                android:text="Дозировка" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/medicineCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/usual"
+            app:cardCornerRadius="@dimen/usual"
+            app:layout_constraintTop_toBottomOf="@id/medicineNameCard">
 
-            <TextView
-                android:id="@+id/medicineSideEffects"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="19sp"
-                android:text="Побочные эффекты" />
+                android:layout_margin="@dimen/usual"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/medicineInteractions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="19sp"
-                android:text="Взаимодействия" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+                <TextView
+                    android:id="@+id/medicineDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/medicine_description"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/medicineDosage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dosage"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/medicineSideEffects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/side_effects"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/medicineInteractions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/interaction"
+                    android:textSize="19sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/medicineCard"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

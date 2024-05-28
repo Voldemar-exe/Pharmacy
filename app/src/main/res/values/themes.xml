@@ -4,16 +4,5 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-    <style name="TopSearchDialog" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowAnimationStyle">@style/TopSearchDialogAnimation</item>
-    </style>
-
-    <style name="TopSearchDialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/slide_in_top</item>
-        <item name="android:windowExitAnimation">@anim/slide_out_top</item>
-    </style>
     <style name="Theme.Pharmacy" parent="Base.Theme.Pharmacy" />
 </resources>

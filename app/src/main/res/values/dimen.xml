@@ -2,4 +2,5 @@
 <resources>
     <dimen name="search_bar">25dp</dimen>
     <dimen name="usual">10dp</dimen>
+    <dimen name="space_sign">50dp</dimen>
 </resources>

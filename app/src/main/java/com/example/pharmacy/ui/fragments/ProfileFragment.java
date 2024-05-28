@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.FragmentProfileBinding;
 import com.example.pharmacy.model.Medicine;
+import com.example.pharmacy.ui.interfaces.OnCheckIsFavorite;
 import com.example.pharmacy.ui.interfaces.OnMedicineClickListener;
 import com.example.pharmacy.utils.MedicineListAdapter;
 import com.example.pharmacy.utils.UserDataManager;
@@ -27,7 +26,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class ProfileFragment extends Fragment implements OnMedicineClickListener {
+public class ProfileFragment extends Fragment implements OnMedicineClickListener, OnCheckIsFavorite {
     private FirebaseAuth mAuth;
     private Set<Medicine> favorites = new HashSet<>();
     private static final int HISTORY_MAX_SIZE = 50;
@@ -50,7 +49,7 @@ public class ProfileFragment extends Fragment implements OnMedicineClickListener
     ) {
         FragmentProfileBinding binding = FragmentProfileBinding.inflate(inflater, container, false);
 
-        medicineAdapter = new MedicineListAdapter(this);
+        medicineAdapter = new MedicineListAdapter(this, this);
 
         binding.favoriteList.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.favoriteList.setAdapter(medicineAdapter);
@@ -65,20 +64,18 @@ public class ProfileFragment extends Fragment implements OnMedicineClickListener
 
         binding.btnHistory.setOnClickListener(v -> Navigation.findNavController(v)
                 .navigate(R.id.action_profileFragment_to_historyFragment));
-        UserDataManager.getInstance(requireContext()).readFavoritesMedicine();
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        UserDataManager userManager = UserDataManager.getInstance(requireContext());
+        userManager.readFavoritesMedicine();
+        userManager.readHistoryMedicine();
         favorites = UserDataManager.getInstance(requireContext())
                 .getFavoritesFromSharedPreferences();
         if (favorites == null) {
             favorites = new HashSet<>();
         }
         medicineAdapter.updateItems(new ArrayList<>(favorites));
+        return binding.getRoot();
     }
+
 
     @Override
     public void onAddToFavoritesClick(Medicine medicine) {
@@ -92,14 +89,8 @@ public class ProfileFragment extends Fragment implements OnMedicineClickListener
 
         if (favorites.contains(medicine)) {
             favorites.remove(medicine);
-            Toast.makeText(requireContext(),
-                    "Удалено из избранного",
-                    Toast.LENGTH_SHORT).show();
         } else {
             favorites.add(medicine);
-            Toast.makeText(requireContext(),
-                    "Добавлено в избранное",
-                    Toast.LENGTH_SHORT).show();
         }
 
         userManager.saveFavoritesToSharedPreferences(favorites);
@@ -129,5 +120,10 @@ public class ProfileFragment extends Fragment implements OnMedicineClickListener
         bundle.putSerializable("medicine", medicine);
         Navigation.findNavController(requireView())
                 .navigate(R.id.action_profileFragment_to_medicineDetailFragment, bundle);
+    }
+
+    @Override
+    public boolean isFavorite(Medicine medicine) {
+        return favorites.contains(medicine);
     }
 }

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="@dimen/usual">
 
 
             <TextView
@@ -33,39 +33,49 @@
                 android:textColor="@color/purple_500"
                 android:textSize="36sp"
                 android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/username"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/black_border"
-                android:drawableStart="@drawable/ic_email"
-                android:drawablePadding="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/usual"
                 android:hint="@string/email"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background" />
+                app:startIconDrawable="@drawable/ic_mail"
+                app:startIconTint="@color/purple_500"
+                app:endIconMode="clear_text">
 
-            <EditText
-                android:id="@+id/password"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/black_border"
-                android:drawableStart="@drawable/ic_purple_password"
-                android:drawablePadding="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/usual"
                 android:hint="@string/password"
-                android:inputType="textPassword"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background" />
+                app:startIconDrawable="@drawable/ic_lock"
+                app:startIconTint="@color/purple_500"
+                app:endIconMode="password_toggle">
 
-            <Button
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialIconButtonFilledStyle"
                 android:id="@+id/loginButton"
-                android:layout_width="match_parent"
+                app:icon="@drawable/ic_login"
+                app:iconPadding="@dimen/usual"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_height="60dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/usual"
                 android:backgroundTint="@color/purple_200"
                 android:text="@string/sign_in"
                 android:textSize="18sp"
@@ -73,26 +83,15 @@
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
+    </androidx.cardview.widget.CardView>
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignUp"
+        style="?attr/materialIconButtonFilledTonalStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:focusable="true"
-        android:clickable="true"
-        app:cardCornerRadius="20dp">
-
-        <TextView
-            android:id="@+id/signupText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/usual"
-            android:text="@string/not_yet_registered_sign_up_now"
-            android:textAlignment="center"
-            android:textColor="@color/purple_500"
-            android:textSize="14sp"
-            />
-    </androidx.cardview.widget.CardView>
+        android:backgroundTint="@color/purple_200"
+        android:textColor="@color/white"
+        android:text="@string/not_yet_registered_sign_up_now"/>
 
 </LinearLayout>
