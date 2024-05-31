@@ -109,6 +109,9 @@ public class HistoryFragment extends Fragment implements OnMedicineClickListener
         UserDataManager userManager = UserDataManager.getInstance(requireContext());
         userManager.readFavoritesMedicine();
         Set<Medicine> favorites = userManager.getFavoritesFromSharedPreferences();
-        return favorites.contains(medicine);
+        if (favorites != null){
+            return favorites.contains(medicine);
+        }
+        return false;
     }
 }

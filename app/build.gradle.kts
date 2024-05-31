@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     id("com.google.gms.google-services")
@@ -18,7 +20,19 @@ android {
     }
 
     buildTypes {
+        debug {
+            android.buildFeatures.buildConfig = true
+            val p = Properties()
+            p.load(project.rootProject.file("app/local.properties").reader())
+            val yourKey: String = p.getProperty("API_KEY")
+            buildConfigField("String", "API_KEY", "\"$yourKey\"")
+        }
         release {
+            android.buildFeatures.buildConfig = true
+            val p = Properties()
+            p.load(project.rootProject.file("app/local.properties").reader())
+            val yourKey: String = p.getProperty("API_KEY")
+            buildConfigField("String", "API_KEY", "\"$yourKey\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -54,6 +68,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.gson)
+    implementation(libs.maps.mobile.v461full)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

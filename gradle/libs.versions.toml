@@ -8,6 +8,8 @@ junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
 lifecycleExtensions = "X.X.X"
+mapsMobile = "4.6.1-lite"
+mapsMobileVersion = "4.6.1-full"
 material = "1.11.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
@@ -39,6 +41,8 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version = "2.2.0" }
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version = "2.7.0" }
+maps-mobile = { module = "com.yandex.android:maps.mobile", version.ref = "mapsMobile" }
+maps-mobile-v461full = { module = "com.yandex.android:maps.mobile", version.ref = "mapsMobileVersion" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }

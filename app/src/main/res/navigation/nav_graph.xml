@@ -129,4 +129,9 @@
             android:id="@+id/action_infoFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.pharmacy.ui.fragments.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>

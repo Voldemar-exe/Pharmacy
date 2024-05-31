@@ -248,6 +248,9 @@ public class MedicineListFragment
         UserDataManager userManager = UserDataManager.getInstance(requireContext());
         userManager.readFavoritesMedicine();
         Set<Medicine> favorites = userManager.getFavoritesFromSharedPreferences();
-        return favorites.contains(medicine);
+        if (favorites != null){
+            return favorites.contains(medicine);
+        }
+        return false;
     }
 }

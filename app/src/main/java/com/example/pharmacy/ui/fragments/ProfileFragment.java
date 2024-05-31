@@ -124,6 +124,9 @@ public class ProfileFragment extends Fragment implements OnMedicineClickListener
 
     @Override
     public boolean isFavorite(Medicine medicine) {
-        return favorites.contains(medicine);
+        if (favorites != null){
+            return favorites.contains(medicine);
+        }
+        return false;
     }
 }
