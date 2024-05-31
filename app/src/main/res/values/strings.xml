@@ -22,14 +22,14 @@
     <string name="sign_in_main">Вход</string>
     <string name="to_sign_up">Зарегистрироваться</string>
     <string name="back">Назад</string>
-    <string name="about">О программе</string>
+    <string name="about">Справка</string>
     <string name="name">Нилов Владимир Владимирович</string>
     <string name="group">ИКБО–06–22</string>
     <string name="year">2024</string>
     <string name="addos123_yandex_ru">addos123@yandex.ru</string>
     <string name="about_author">Об авторе</string>
     <string name="app_description">
-    Наше приложение позволяет: \n
+    Наше приложение позволяет: \n\n
     • Находить нужные лекарства: Просматривайте информацию о каждом препарате (описание, дозировка и тд)\n\n
     • Использовать удобные фильтры: Быстро находите нужные лекарства по типам, дозировке и другим параметрам.\n\n
     • Регистрируйтесь для получения доступа к расширенным функциям приложения: сохранение истории просмотров и списка избранных препаратов.\n\n
@@ -48,4 +48,17 @@
     <string name="clear_filters">Сбросить фильтры</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="resources">Ресурсы</string>
+    <string name="map_resources">Условия использования Яндекс.Карт</string>
+    <string name="map_link">https://yandex.ru/legal/maps_termsofuse/</string>
+    <string name="resources_info">Справочные ресурсы</string>
+    <string name="app_name_main">Моя Аптека</string>
+    <string name="description_info_medicine">В этом разделе вы можете найти информацию о лекарствах, их описание, состав, побочные эффекты и прочее. Также вы можете добавить понравившееся лекарство в избранное или просмотреть информацию о нем подробнее</string>
+    <string name="title_info_medicine">Cписок лекарств</string>
+    <string name="title_info_map">Карта аптек</string>
+    <string name="description_info_map">На этой карте отображены аптеки в наблюдаемом районе. Вы можете приблизить или отдалить карту, чтобы найти нужную вам аптеку</string>
+    <string name="title_info_favorites">Избранные лекарства</string>
+    <string name="description_info_favorites">В этом разделе вы можете сохранить понравившиеся лекарства для быстрого доступа к их информации</string>
+    <string name="title_info_history">Описание истории лекарств</string>
+    <string name="description_info_history">В этом разделе вы можете увидеть список просмотренных вами лекарств</string>
 </resources>

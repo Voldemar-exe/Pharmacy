@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.FragmentMapBinding;
@@ -38,7 +40,16 @@ public class MapFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MapKitFactory.initialize(requireContext());
+        if (getContext() != null) {
+            MapKitFactory.initialize(getContext());
+        }
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(requireView()).popBackStack();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -62,24 +73,23 @@ public class MapFragment extends Fragment {
         searchOptions.setSearchTypes(SearchType.BIZ.value);
         searchOptions.setResultPageSize(32);
 
-        map.addCameraListener((map1, cameraPosition1, cameraUpdateReason, b) -> {
-            searchManager.submit(
-                    "аптеки",
-                    VisibleRegionUtils.toPolygon(map1.visibleRegion(cameraPosition1)),
-                    searchOptions,
-                    new Session.SearchListener() {
-                        @Override
-                        public void onSearchResponse(@NonNull Response response) {
-                            mapObjects.clear();
-                            addPlacemarksToMap(response);
-                        }
+        map.addCameraListener((map1, cameraPosition1, cameraUpdateReason, b) ->
+                searchManager.submit(
+                        "аптеки",
+                        VisibleRegionUtils.toPolygon(map1.visibleRegion(cameraPosition1)),
+                        searchOptions,
+                        new Session.SearchListener() {
+                            @Override
+                            public void onSearchResponse(@NonNull Response response) {
+                                mapObjects.clear();
+                                addPlacemarksToMap(response);
+                            }
 
-                        @Override
-                        public void onSearchError(@NonNull Error error) {
+                            @Override
+                            public void onSearchError(@NonNull Error error) {
+                            }
                         }
-                    }
-            );
-        });
+                ));
         map.move(cameraPosition);
         return binding.getRoot();
     }
@@ -89,10 +99,17 @@ public class MapFragment extends Fragment {
             if (item.getObj() != null) {
                 for (Geometry geometry : item.getObj().getGeometry()) {
                     if (geometry.getPoint() != null) {
-                        mapObjects.addPlacemark(
-                                geometry.getPoint(),
-                                ImageProvider.fromResource(requireContext(), R.drawable.ic_pin)
-                        );
+                        try {
+                            mapObjects.addPlacemark(
+                                    geometry.getPoint(),
+                                    ImageProvider.fromResource(
+                                            requireContext(),
+                                            R.drawable.ic_pin
+                                    )
+                            );
+                        } catch (Exception e){
+                            return;
+                        }
                     }
                 }
             }

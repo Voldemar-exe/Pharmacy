@@ -1,4 +1,4 @@
-package com.example.pharmacy.ui.fragments;
+package com.example.pharmacy.ui.dialogs;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -12,10 +12,11 @@ import androidx.fragment.app.Fragment;
 import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.FragmentInfoBinding;
 
-public class InfoFragment extends Fragment {
+public class AppInfoFragment extends Fragment {
     private FragmentInfoBinding binding;
 
-    public InfoFragment() {}
+    public AppInfoFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,8 +31,8 @@ public class InfoFragment extends Fragment {
     ) {
         binding = FragmentInfoBinding.inflate(getLayoutInflater());
 
-        binding.btnAboutAuthor.setOnClickListener(view -> showAboutAuthorDialog());
-
+        binding.btnAboutAuthor.setOnClickListener(v -> showAboutAuthorDialog());
+        binding.btnAboutResources.setOnClickListener(v -> showAboutResources());
         return binding.getRoot();
     }
 
@@ -39,6 +40,15 @@ public class InfoFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.author_info_dialog, null);
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showAboutResources() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.resources_info, null);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();

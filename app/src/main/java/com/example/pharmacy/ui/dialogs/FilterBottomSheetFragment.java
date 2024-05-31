@@ -1,4 +1,4 @@
-package com.example.pharmacy.ui.fragments;
+package com.example.pharmacy.ui.dialogs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,7 +34,11 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState
+    ) {
         binding = FilterBottomSheetBinding.inflate(getLayoutInflater());
         return binding.getRoot();
     }

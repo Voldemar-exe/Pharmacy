@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnBack"
         style="?attr/materialIconButtonFilledStyle"
@@ -30,14 +31,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/usual"
-            android:text="@string/history"
+            android:text="@string/favorites"
             android:textAlignment="center"
             android:textSize="22sp"
             android:textStyle="bold" />
     </LinearLayout>
 
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/historyList"
+        android:id="@+id/favoriteList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/usual"

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/MedicineListFragment">
+    app:startDestination="@id/mainMenuFragment">
 
     <fragment
-        android:id="@id/MedicineListFragment"
+        android:id="@+id/MedicineListFragment"
         android:name="com.example.pharmacy.ui.fragments.MedicineListFragment"
         android:label="fragment_home"
         app:defaultNavHost="true"
@@ -70,6 +70,12 @@
         <action
             android:id="@+id/action_profileFragment_to_infoFragment"
             app:destination="@id/infoFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
 
     <fragment
@@ -95,7 +101,7 @@
     </fragment>
     <dialog
         android:id="@+id/filterBottomSheetFragment"
-        android:name="com.example.pharmacy.ui.fragments.FilterBottomSheetFragment"
+        android:name="com.example.pharmacy.ui.dialogs.FilterBottomSheetFragment"
         android:label="FilterBottomSheetFragment"
         tools:layout="@layout/filter_bottom_sheet">
         <action
@@ -113,10 +119,13 @@
         <action
             android:id="@+id/action_historyFragment_to_medicineDetailFragment"
             app:destination="@id/medicineDetailFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.example.pharmacy.ui.fragments.InfoFragment"
+        android:name="com.example.pharmacy.ui.dialogs.AppInfoFragment"
         android:label="fragment_info"
         tools:layout="@layout/fragment_info" >
         <action
@@ -128,10 +137,50 @@
         <action
             android:id="@+id/action_infoFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_infoFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.pharmacy.ui.fragments.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@id/mainMenuFragment"
+        android:name="com.example.pharmacy.ui.fragments.MainMenuFragment"
+        android:label="fragment_main_menu"
+        tools:layout="@layout/fragment_main_menu" >
+        <action
+            android:id="@+id/action_mainMenuFragment_to_MedicineListFragment"
+            app:destination="@id/MedicineListFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.pharmacy.ui.fragments.FavoritesFragment"
+        android:label="FavoritesFragment"
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favoritesFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

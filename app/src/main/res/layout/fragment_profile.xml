@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/usual"
-        android:text="@string/favorites"
+        android:text="Возможности"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnExit" />
@@ -53,17 +53,17 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/usual"
         app:icon="@drawable/ic_history"
-        app:layout_constraintBottom_toTopOf="@id/favoriteList"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favoriteList"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/usual"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favorite" />
+        app:layout_constraintTop_toBottomOf="@id/btnExit" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnFavorites"
+        style="?attr/materialIconButtonFilledStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/usual"
+        app:icon="@drawable/ic_favorite"
+        app:layout_constraintEnd_toStartOf="@id/btnHistory"
+        app:layout_constraintTop_toBottomOf="@id/btnExit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

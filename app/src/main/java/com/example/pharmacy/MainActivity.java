@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.MedicineListFragment) {
-                navController.navigate(R.id.mapFragment);
+            if (itemId == R.id.mainMenuFragment) {
+                navController.navigate(R.id.mainMenuFragment);
                 return true;
             }
             if (itemId == R.id.signInFragment) {
