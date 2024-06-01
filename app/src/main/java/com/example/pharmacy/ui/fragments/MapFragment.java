@@ -91,6 +91,7 @@ public class MapFragment extends Fragment {
                         }
                 ));
         map.move(cameraPosition);
+        binding.btnRecenter.setOnClickListener(v -> map.move(cameraPosition));
         return binding.getRoot();
     }
 

@@ -3,6 +3,8 @@ package com.example.pharmacy.ui.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,14 +100,32 @@ public class MedicineListFragment
         binding.medicationsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.medicationsList.setAdapter(medicineAdapter);
         binding.medicationsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private final Handler handler = new Handler(Looper.getMainLooper());
+            private final Runnable hideButtonRunnable =
+                    () -> binding.btnUp.setVisibility(View.INVISIBLE);
+
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                LinearLayoutManager layoutManager =
+                        (LinearLayoutManager) recyclerView.getLayoutManager();
                 savedScrollPosition = layoutManager.findFirstVisibleItemPosition();
             }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    handler.postDelayed(hideButtonRunnable, 500);
+                } else {
+                    binding.btnUp.setVisibility(View.VISIBLE);
+                    handler.removeCallbacks(hideButtonRunnable);
+                }
+            }
         });
+        binding.btnUp.setVisibility(View.INVISIBLE);
+        binding.btnUp.setOnClickListener(view -> binding.medicationsList.smoothScrollToPosition(0));
         binding.btnFilter.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("filter", savedFiltration);
@@ -256,7 +276,7 @@ public class MedicineListFragment
         UserDataManager userManager = UserDataManager.getInstance(requireContext());
         userManager.readFavoritesMedicine();
         Set<Medicine> favorites = userManager.getFavoritesFromSharedPreferences();
-        if (favorites != null){
+        if (favorites != null) {
             return favorites.contains(medicine);
         }
         return false;

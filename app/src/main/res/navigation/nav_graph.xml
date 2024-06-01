@@ -98,6 +98,12 @@
         <action
             android:id="@+id/action_medicineDetailFragment_to_MedicineListFragment"
             app:destination="@id/MedicineListFragment" />
+        <action
+            android:id="@+id/action_medicineDetailFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_medicineDetailFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
     <dialog
         android:id="@+id/filterBottomSheetFragment"
@@ -182,5 +188,8 @@
         <action
             android:id="@+id/action_favoritesFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_medicineDetailFragment"
+            app:destination="@id/medicineDetailFragment" />
     </fragment>
 </navigation>

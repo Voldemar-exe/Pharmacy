@@ -1,6 +1,8 @@
 package com.example.pharmacy.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.FragmentFavoritesBinding;
@@ -57,6 +60,25 @@ public class FavoritesFragment extends Fragment implements OnMedicineClickListen
 
         binding.favoriteList.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.favoriteList.setAdapter(medicineAdapter);
+        binding.favoriteList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private final Handler handler = new Handler(Looper.getMainLooper());
+            private final Runnable hideButtonRunnable =
+                    () -> binding.btnUp.setVisibility(View.INVISIBLE);
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    handler.postDelayed(hideButtonRunnable, 500);
+                } else {
+                    binding.btnUp.setVisibility(View.VISIBLE);
+                    handler.removeCallbacks(hideButtonRunnable);
+                }
+            }
+        });
+        binding.btnUp.setVisibility(View.INVISIBLE);
+        binding.btnUp.setOnClickListener(view -> binding.favoriteList.smoothScrollToPosition(0));
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v)
                 .popBackStack());
 
@@ -115,7 +137,7 @@ public class FavoritesFragment extends Fragment implements OnMedicineClickListen
         Bundle bundle = new Bundle();
         bundle.putSerializable("medicine", medicine);
         Navigation.findNavController(requireView())
-                .navigate(R.id.action_profileFragment_to_medicineDetailFragment, bundle);
+                .navigate(R.id.action_favoritesFragment_to_medicineDetailFragment, bundle);
     }
 
     @Override

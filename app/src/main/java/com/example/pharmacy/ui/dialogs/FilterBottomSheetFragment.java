@@ -46,6 +46,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.getRoot().requestFocus();
         if (medicineChips == null) {
             Set<String> uniqueMedicinesSet = new HashSet<>(
                     Arrays.asList(getResources().getStringArray(R.array.medicine_types))

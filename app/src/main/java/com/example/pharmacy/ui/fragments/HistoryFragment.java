@@ -1,6 +1,8 @@
 package com.example.pharmacy.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.FragmentHistoryBinding;
@@ -59,6 +62,25 @@ public class HistoryFragment extends Fragment implements OnMedicineClickListener
 
         binding.historyList.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.historyList.setAdapter(medicineAdapter);
+        binding.historyList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private final Handler handler = new Handler(Looper.getMainLooper());
+            private final Runnable hideButtonRunnable =
+                    () -> binding.btnUp.setVisibility(View.INVISIBLE);
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    handler.postDelayed(hideButtonRunnable, 500);
+                } else {
+                    binding.btnUp.setVisibility(View.VISIBLE);
+                    handler.removeCallbacks(hideButtonRunnable);
+                }
+            }
+        });
+        binding.btnUp.setVisibility(View.INVISIBLE);
+        binding.btnUp.setOnClickListener(view -> binding.historyList.smoothScrollToPosition(0));
 
         history = UserDataManager.getInstance(requireContext())
                 .getHistoryFromSharedPreferences();
