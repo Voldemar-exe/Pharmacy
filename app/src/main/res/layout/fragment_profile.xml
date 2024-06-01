@@ -23,8 +23,8 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profileImage"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_user" />
 
             <LinearLayout
@@ -48,10 +48,11 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnExit"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:text="@string/exit_account"
+                    android:textSize="14sp"
                     app:icon="@drawable/ic_logout"
                     app:iconGravity="textStart"
                     app:layout_constraintEnd_toEndOf="parent"

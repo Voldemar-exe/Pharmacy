@@ -42,11 +42,6 @@ public class SignUpFragment extends Fragment {
                 false
         );
 
-        binding.btnBack.setOnClickListener(v -> Navigation
-                .findNavController(v)
-                .navigate(R.id.action_signUpFragment_to_signInFragment)
-        );
-
         binding.loginButton.setOnClickListener(v -> {
             String username = binding.username.getText().toString().trim();
             String email = binding.email.getText().toString().trim();

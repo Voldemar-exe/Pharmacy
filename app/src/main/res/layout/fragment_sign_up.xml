@@ -8,17 +8,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnBack"
-        style="?attr/materialIconButtonFilledStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/usual"
-        app:icon="@drawable/back_button"
-        app:layout_constraintBottom_toTopOf="@id/register"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/register"
         android:layout_width="match_parent"
