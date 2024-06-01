@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 
 import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.FragmentProfileBinding;
+import com.example.pharmacy.utils.UserDataManager;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
@@ -42,7 +43,9 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(requireView())
                     .navigate(R.id.action_profileFragment_to_signInFragment);
         });
-
+        UserDataManager userManager = UserDataManager.getInstance(requireContext());
+        userManager.readFavoritesMedicine();
+        userManager.readHistoryMedicine();
         binding.btnHistory.setOnClickListener(v -> Navigation.findNavController(v)
                 .navigate(R.id.action_profileFragment_to_historyFragment));
         binding.btnFavorites.setOnClickListener(v -> Navigation.findNavController(v)
