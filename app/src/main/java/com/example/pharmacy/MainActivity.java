@@ -13,7 +13,6 @@ import com.example.pharmacy.databinding.ActivityMainBinding;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.yandex.mapkit.MapKitFactory;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         FirebaseApp.initializeApp(this);
-        MapKitFactory.setApiKey(BuildConfig.API_KEY);
         mAuth = FirebaseAuth.getInstance();
 
         Configuration config = getResources().getConfiguration();

@@ -29,6 +29,7 @@ rxjavaVersion = "3.1.8"
 rxandroid = "3.0.2"
 firebaseFirestore = "25.0.0"
 composePreviewRenderer = "0.0.1-alpha01"
+espressoContrib = "3.6.0-rc01"
 
 [libraries]
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
@@ -36,8 +37,8 @@ firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version = "1.2.0-rc01" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.6.0-rc01" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version = "2.2.0" }
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version = "2.7.0" }
@@ -63,6 +64,7 @@ rxjava3-rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "
 rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 compose-preview-renderer = { group = "com.android.tools.compose", name = "compose-preview-renderer", version.ref = "composePreviewRenderer" }
+espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espressoContrib" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
