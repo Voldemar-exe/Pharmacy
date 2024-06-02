@@ -145,6 +145,77 @@
                     android:src="@drawable/ic_arrow_forward"
                     app:tint="@color/purple_500" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/btnChangeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/usual"
+                android:background="@drawable/black_border"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/usual"
+                    android:layout_marginBottom="@dimen/usual"
+                    android:layout_weight="0.4"
+                    app:tint="@color/purple_500"
+                    android:src="@drawable/ic_user" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:text="@string/change_name"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/ic_arrow_forward"
+                    app:tint="@color/purple_500" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnChangeSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/usual"
+                android:background="@drawable/black_border"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/usual"
+                    android:layout_marginBottom="@dimen/usual"
+                    android:layout_weight="0.4"
+                    app:tint="@color/purple_500"
+                    android:src="@drawable/ic_change_size" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:text="@string/change_font"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/ic_arrow_forward"
+                    app:tint="@color/purple_500" />
+            </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

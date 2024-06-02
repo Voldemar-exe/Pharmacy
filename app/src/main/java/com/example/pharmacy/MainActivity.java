@@ -1,5 +1,8 @@
 package com.example.pharmacy;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         MapKitFactory.setApiKey(BuildConfig.API_KEY);
         mAuth = FirebaseAuth.getInstance();
+
+        Configuration config = getResources().getConfiguration();
+        SharedPreferences sharedPreferences =
+                getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        config.fontScale = sharedPreferences.getFloat("font_scale", 1.0f);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);

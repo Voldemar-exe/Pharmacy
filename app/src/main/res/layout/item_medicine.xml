@@ -2,10 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:layout_marginStart="3dp"
-    android:layout_marginEnd="3dp"
-    android:layout_marginBottom="3dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/half_usual"
+    android:layout_marginEnd="@dimen/half_usual"
+    android:layout_marginBottom="@dimen/half_usual"
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="@dimen/usual">
@@ -20,26 +20,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
-            android:layout_weight="7"
+            android:layout_weight="5"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_view_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:maxLines="3"
                 android:text="@string/med_name"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/medType"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center|start"
-                android:layout_weight="0"
                 android:hint="@string/test"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
         </LinearLayout>
 
         <ImageButton
