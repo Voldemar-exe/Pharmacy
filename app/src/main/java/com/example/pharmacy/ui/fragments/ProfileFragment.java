@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.pharmacy.databinding.FragmentProfileBinding;
+import com.example.pharmacy.ui.interfaces.OnNameUpdatedListener;
 import com.example.pharmacy.utils.NavigationHandler;
 import com.example.pharmacy.utils.ProfileActionsHandler;
 import com.example.pharmacy.utils.UserDataManager;
@@ -16,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements OnNameUpdatedListener {
 
     private FragmentProfileBinding binding;
     private FirebaseAuth mAuth;
@@ -51,6 +52,7 @@ public class ProfileFragment extends Fragment {
         UserDataManager userManager = UserDataManager.getInstance(requireContext());
         userManager.readFavoritesMedicine();
         userManager.readHistoryMedicine();
+        profileActionsHandler.setOnNameUpdatedListener(this);
 
         binding.btnHistory.setOnClickListener(v ->
                 navigationHandler.navigateToHistory());
@@ -62,6 +64,10 @@ public class ProfileFragment extends Fragment {
                 profileActionsHandler.showChangeFontSizeDialog());
 
         return binding.getRoot();
+    }
+    @Override
+    public void onNameUpdated(String newName) {
+        binding.username.setText(newName);
     }
 }
 

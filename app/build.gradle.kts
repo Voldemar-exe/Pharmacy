@@ -69,9 +69,11 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.gson)
     implementation(libs.maps.mobile.v461full)
+    implementation(libs.uiautomator)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.espresso.contrib)
+    androidTestImplementation(libs.hamcrest)
     annotationProcessor(libs.room.compiler)
 }

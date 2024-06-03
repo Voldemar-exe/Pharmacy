@@ -14,18 +14,24 @@ import com.example.pharmacy.MainActivity;
 import com.example.pharmacy.R;
 import com.example.pharmacy.databinding.DialogChangeFontBinding;
 import com.example.pharmacy.databinding.DialogChangeNameBinding;
+import com.example.pharmacy.ui.interfaces.OnNameUpdatedListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class ProfileActionsHandler {
-    private final android.content.Context context;
+    private final Context context;
     private final FirebaseAuth mAuth;
+    private OnNameUpdatedListener onNameUpdatedListener;
 
     public ProfileActionsHandler(Context context, FirebaseAuth mAuth) {
         this.context = context;
         this.mAuth = mAuth;
+    }
+
+    public void setOnNameUpdatedListener(OnNameUpdatedListener listener) {
+        this.onNameUpdatedListener = listener;
     }
 
     public void showChangeNameDialog() {
@@ -40,14 +46,10 @@ public class ProfileActionsHandler {
         binding.btnSaveName.setOnClickListener(v -> {
             String newName = binding.etNewName.getText().toString();
             if (!newName.isEmpty()) {
-                updateUserName(newName.toString().trim());
+                updateUserName(newName.trim());
                 alertDialog.dismiss();
             } else {
-                android.widget.Toast.makeText(
-                                context,
-                                "Пожалуйста, введите новое имя",
-                                android.widget.Toast.LENGTH_SHORT)
-                        .show();
+                showToast("Пожалуйста, введите новое имя");
             }
         });
 
@@ -66,7 +68,7 @@ public class ProfileActionsHandler {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
         float savedFontScale = sharedPreferences.getFloat("font_scale", 1.0f);
-        binding.fontSizeSeekBar.setProgress((int) ((savedFontScale - 0.5f) * 100) );
+        binding.fontSizeSeekBar.setProgress((int) ((savedFontScale - 0.5f) * 100));
         binding.fontSizeText.setText(String.format("Размер шрифта: %.1f", savedFontScale));
 
         binding.fontSizeSeekBar.setOnSeekBarChangeListener(
@@ -119,24 +121,25 @@ public class ProfileActionsHandler {
                     new UserProfileChangeRequest.Builder()
                             .setDisplayName(newName)
                             .build();
-
+            showToast("Обновление имени . . .");
             user.updateProfile(profileUpdates)
                     .addOnCompleteListener(
                             task -> {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(
-                                                    context,
-                                                    "Имя пользователя обновлено",
-                                                    Toast.LENGTH_SHORT)
-                                            .show();
+                                    if (onNameUpdatedListener != null) {
+                                        onNameUpdatedListener.onNameUpdated(newName);
+                                        showToast("Имя пользователя обновлено");
+                                    } else {
+                                        showToast("Ошибка при обновлении имени пользователя");
+                                    }
                                 } else {
-                                    Toast.makeText(
-                                                    context,
-                                                    "Ошибка при обновлении имени пользователя",
-                                                    Toast.LENGTH_SHORT)
-                                            .show();
+                                    showToast("Ошибка при обновлении имени пользователя");
                                 }
                             });
         }
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }
